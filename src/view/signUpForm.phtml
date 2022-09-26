@@ -1,0 +1,19 @@
+<div class="form-container">
+  <h2>S'inscrire</h2>
+  <span class="success"><?= $userMessages['sendSuccess'] ?></span>
+  <form method="post">
+    <label for="inputFirstName">Prénom <span class="error"><?=$userMessages['requiredFirstName'] ?></span></label>
+    <input name="formFirstName" id="inputFirstName" type="text" />
+
+    <label for="inputLastName">Nom <span class="error"><?=$userMessages['requiredLastName'] ?></span></label>
+    <input name="formLastName" id="inputLastName" type="text" />
+
+    <label for="inputLogin">Login <span class="error"><?=$userMessages['requiredLogin'] ?></span></label>
+    <input name="formLogin" id="inputLogin" type="text" />
+
+    <label for="inputPassword">Mot de passe <span class="error"><?=$userMessages['requiredPassword'] ?></span></label>
+    <input name="formPassword" id="inputPassword" type="password" />
+
+    <input type="submit" name="createAccountSubmit" value="Créer" />
+  </form>
+</div>

@@ -1,0 +1,17 @@
+{
+    "name": "konem/user-account-poo",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "tontonkone",
+            "email": "konemamoudou84@gmail.com"
+        }
+    ],
+    "require": {
+        "filp/whoops": "^2.14"
+    }
+}
