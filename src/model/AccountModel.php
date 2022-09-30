@@ -1,7 +1,7 @@
 <?php
 namespace Src\model;
 
-class Account {
+class AccountModel {
     private string $_id;
     private string $_login;
     private string $_password;

@@ -1,18 +1,19 @@
 <?php
 namespace Src\repository;
-
 use PDO;
-use Src\model\Account;
 use Src\model\Credentials;
+use Src\model\AccountModel;
 
 class AccountRepository {
+
+
   private PDO $_connexion;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->_connexion = DataBase::getConnexion();
   }
-
-  public function getAccount(string $id): ?Account {
+  public function getAccount(string $id): ?AccountModel {
     $stmt = $this->_connexion->prepare('
         SELECT * FROM Account WHERE id = :id;
     ');
@@ -21,7 +22,7 @@ class AccountRepository {
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($row) {
-      $account = new Account();
+      $account = new AccountModel();
       $account->setId($row['id']);
       $account->setLogin($row['login']);
       $account->setEncryptedPassword($row['password']);
@@ -43,13 +44,9 @@ class AccountRepository {
     $stmt->execute();
   }
 
-  public function createAccount(Account $account) {
-    $stmt = $this->_connexion->prepare('
-        INSERT INTO Account (
-          id, firstName, lastName, login, password, isAdmin
-        ) VALUES (
-          UUID(), :firstName, :lastName, :login, :password, :isAdmin
-        );
+  public function createAccount(AccountModel $account) {
+    $stmt = $this->_connexion->prepare('INSERT INTO Account (id, firstName, lastName, login, password, isAdmin)
+                                        VALUES (UUID(), :firstName, :lastName, :login, :password, :isAdmin);
     ');
 
     $stmt->bindValue('firstName', $account->getFirstName());
@@ -61,7 +58,7 @@ class AccountRepository {
     $stmt->execute();
   }
 
-  public function updateAccount(Account $account) {
+  public function updateAccount(AccountModel $account) {
     $stmt = $this->_connexion->prepare('UPDATE Account
           SET firstName = :firstName,
               lastName  = :lastName,
@@ -81,12 +78,8 @@ class AccountRepository {
     $stmt->execute();
   }
 
-  public function retrieveAccountFromCredentials(Credentials $credentials): ?Account {
-    $stmt = $this->_connexion->prepare('
-      SELECT *
-        FROM Account
-      WHERE login = :login
-    ');
+  public function retrieveAccountFromCredentials(Credentials $credentials): ?AccountModel {
+    $stmt = $this->_connexion->prepare('SELECT * FROM Account WHERE login = :login');
     $stmt->execute([
         'login' => $credentials->getLogin()
     ]);
@@ -96,7 +89,7 @@ class AccountRepository {
       return null;
     }
 
-    $account = new Account();
+    $account = new AccountModel();
     $account->setLogin($result['login']);
     $account->setEncryptedPassword($result['password']);
     $account->setFirstName($result['firstName']);
@@ -114,7 +107,7 @@ class AccountRepository {
 
     $accounts = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $account = new Account();
+      $account = new AccountModel();
       $account->setId($row['id']);
       $account->setLogin($row['login']);
       $account->setEncryptedPassword($row['password']);

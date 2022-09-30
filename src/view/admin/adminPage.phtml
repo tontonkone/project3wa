@@ -1,6 +1,10 @@
 <div class="admin-container">
   <p>Bienvenue sur votre Admin !</p>
+  <p>Bonjour <?= $_COOKIE['firstName'] ?> <?= $_COOKIE['lastName'] ?></p>
   <a href="?page=admin&action=listAccounts">Liste des comptes</a>
   <br />
   <a href="?page=admin&action=createAccount">Créer un compte</a>
+  <br>
+  <a href="?page=admin&action=listArticle">voir articles</a>
+
 </div>

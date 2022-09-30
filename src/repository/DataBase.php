@@ -10,7 +10,7 @@ class DataBase {
 
     // DataBase properties
     private PDO $_connexion;
-    private const DATABASE_CONFIG_FILEPATH = 'src/database.config.php';
+    private const DATABASE_CONFIG_FILEPATH = '../config/database.config.php';
 
     private function __construct(
         array $dbConfig

@@ -1,0 +1,9 @@
+<h1>Nos articles</h1>
+
+<?php foreach ($articles as $article) : ?>
+    <h2><?= $article->getTitle() ?></h2>
+    <p><?= $article->getContent() ?></p>
+
+    <a href="?page=admin&action=deleteArticle&id=<?= $article->getId() ?>">commenter</a>
+    <a href="?page=admin&action=deleteArticle&id=<?= $article->getId() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">Supprimer</a>
+<?php endforeach ?>

@@ -1,6 +1,13 @@
 <div class='home-container'>
+  <h1><?= $titleH1 ?></h1>
   <h2>Home</h2>
   <p>Bonjour <?= $_COOKIE['firstName'] ?> <?= $_COOKIE['lastName'] ?></p>
+  <h3>Voir les Article</h3>
+  <a href="#">Les articles</a>
+  <?php foreach ($articles as $article) : ?>
+    <h2><?= $article->getTitle() ?></h2>
+    <p><?= $article->getContent() ?></p>
+  <?php endforeach ?>
   <p>
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias dignissimos odit culpa quasi quidem hic maxime, neque adipisci recusandae. Sapiente suscipit soluta natus eveniet ex autem incidunt, laborum culpa sequi.
   </p>
