@@ -1,14 +1,14 @@
 <?php
 namespace Src\controller\backcontroller;
 
-class AdminController {
+use Src\core\Rendering;
+use Src\controller\HomeController;
+use Src\repository\AccountRepository;
 
-    /**
-     * **********************DISPLAY_HOME_ADMIN***************
-     * *******************************************************
-     */
-    public function displayHomeAdmin()
-    {
-        
-    }
+class AdminController extends HomeController {
+
+    
+
+
+
 }

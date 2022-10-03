@@ -1,0 +1,116 @@
+.menucontainer {
+    position: absolute;
+    width: 100%;
+    height: 8vh;
+    top: 0;
+    left: 0;
+    background: linear-gradient(#343a3f, #181a1d);
+    color: #fff;
+    padding: 0 2rem;
+
+    &__burger {
+        display: none;
+    }
+}
+
+.navbar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__menu--logo {
+        font-size: 3rem;
+        @include typo;
+    }
+
+    &__menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        width: 550px;
+    }
+
+    &__menu--link {
+        margin: 0rem .3rem;
+        padding: .2rem .5rem;
+        display: block;
+        transition: 0.3s;
+        border-radius: .5rem;
+        @include typo;
+
+        &:hover {
+            background-color: #00ffff;
+            color: $colorBtnHover;
+        }
+    }
+}
+
+.active {
+    background-color: linear-gradient(#343a3f, #181a1d);
+    color: $colorText;
+}
+
+
+@media only screen and (max-width:900px) {
+    .navbar__menu--logo {
+        z-index: 35;
+    }
+
+    .menucontainer__burger {
+        display: block;
+        font-size: 2rem;
+        cursor: pointer;
+        position: relative;
+        background: transparent;
+        z-index: 30;
+
+        .open {
+            display: block;
+        }
+
+        .close {
+            display: none;
+        }
+
+    }
+
+    .active .open {
+        display: none;
+    }
+
+    .active .close {
+        display: block;
+    }
+
+    .navbar__menu--item {
+        display: none;
+    }
+
+    .navbar__menu {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        height: 80vh;
+        background: linear-gradient(#343a3f, #181a1d);
+        flex-direction: column;
+        padding: 1rem;
+        justify-content: space-around;
+        transition: transform .2s;
+        visibility: hidden;
+        z-index: 1;
+
+
+    }
+
+    .active .navbar__menu {
+        visibility: visible;
+        transition: transform .5s;
+        &--item {
+        display: block;
+        }
+    }
+}

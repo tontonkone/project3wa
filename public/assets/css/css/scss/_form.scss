@@ -1,0 +1,97 @@
+
+.container-ipt{
+
+    margin-top: 5rem;
+    width: 350px;
+    height: 500px;
+    background: linear-gradient(#343a3f, #181a1d);
+    border-radius: 25px;
+    box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.801);
+    @include displayFlex;
+    overflow-x: none;
+    .container-ipt__form {
+        display: grid;
+        grid-template-columns: 1fr;
+        form {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            @include displayFlex;
+            flex-direction: column;
+        }   
+            }
+            &__register {
+                visibility: hidden;
+            }
+            &__title {
+                color: #00ffff;
+                font-size: 1.5rem;
+                text-transform: uppercase;
+            }
+            &__field{
+                width: 280px;
+                margin: 10px 0;
+                height: 50px;
+                background:none;
+                display: flex;
+                align-items: center;
+                box-shadow: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.2), 
+                            inset -6px -6px 10px 0 rgba(160, 156, 156, 0.5);
+
+                border-radius: 30px;
+                
+            }
+            &__field i {
+                flex: 1;
+                text-align: center;
+                font-size:1.3rem ;
+                color: #00ffff;
+            }
+            &__field input{
+                flex: 5;
+                width: 100%;
+                font-size: 18px ;
+                font-weight: 600;
+                border-radius: 30px;
+                border: none;
+                outline: none;
+                background: none;
+                color: aliceblue;
+                }
+                p,
+                a {
+                    font-size: 14px;
+                    color: #999;
+                }
+                .account-text {
+                    color: #5ab9ea;
+                }
+}
+.btn {
+    width: 130px;
+    height: 45px;
+    background: linear-gradient(#343a3f, #181a1d);
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 20px 0;
+    color: #5ab9ea;
+    cursor: pointer;
+    border: 1px solid #00ffff;
+    border-radius: 40px;
+    box-shadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.2),
+        -3px -3px 8px 0 rgba(255, 255, 255, 0.301);
+
+    &:hover {
+        transform: scale(1.1);
+        background-color: #0c4646;
+    }
+}
+
+@media(max-width: 750px) {
+    .container-ipt {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 3px;
+    }
+}

@@ -1,12 +1,13 @@
 <?php
 namespace Src\controller\frontController;
 
+use Src\controller\HomeController;
 use Src\core\Rendering;
 use Src\model\Credentials;
 use Src\model\AccountModel;
 use Src\repository\AccountRepository;
 
-class AuthController {
+class AuthController extends HomeController {
 
     public function authVerif()
     {
@@ -31,18 +32,24 @@ class AuthController {
             $userMessages['requiredLastName'] = $account->setLastName(
                 htmlentities($_POST['formLastName'])
             );
-            $userMessages['requiredLogin'] = $account->setLogin(
-                htmlentities($_POST['formLogin'])
-            );
+            $user = $this->accountRepository->checkLogin($_POST['formLogin']);
+            if ($user){
+                $userMessages['requiredLogin'] = "ce login déjà est prit ";
+            } else {
+                $userMessages['requiredLogin'] = $account->setLogin(
+                    htmlentities($_POST['formLogin'])
+                );
+            }
+
             $userMessages['requiredPassword'] = $account->setPassword(
                 $_POST['formPassword']
             );
-
             // Si tous les champs obligatoires sont remplis, on crée le compte
             if (
                 empty($userMessages['requiredFirstName']) && empty($userMessages['requiredLastName']) &&
                 empty($userMessages['requiredLogin']) && empty($userMessages['requiredPassword'])
             ) {
+                
                 $accountRepository->createAccount($account);
                 $userMessages['sendSuccess'] = 'Votre compte a bien été créé';
             }
@@ -65,13 +72,18 @@ class AuthController {
                     if ($credentials->isValid($account->getPassword())) {
                         // Connexion réussie
                         $_SESSION['isLogged'] = true;
-
+                        $_SESSION['id'] = $account->getId();
+                        $_SESSION['firstName'] = $account->getFirstName();
+                        $_SESSION['lastName'] = $account->getLastName();
+                        
+                        
                         // On stocke les informations de l'utilisateur dans des cookies pendant 30jours
                         setcookie('firstName', $account->getFirstName(), time() + 3600 * 24 * 30, '/');
                         setcookie('lastName', $account->getLastName(), time() + 3600 * 24 * 30, '/');
 
                         if ($account->isAdmin()) {
                             $_SESSION['isAdmin'] = true;
+
                             // Si l'utilisateur est un admin, on le redirige vers la page d'admin
                             header('Location:?page=admin');
                         } else {
@@ -83,7 +95,8 @@ class AuthController {
                 $userMessages['loginFail'] = 'Le couple login/mot de passe est inconnu';
             }
         }
-        Rendering::renderContent('loginPage', compact('userMessages'));
+        $title="Accueil";
+        Rendering::renderContent('loginPage', compact('userMessages','title'));
     }
 
 }

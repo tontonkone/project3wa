@@ -1,0 +1,25 @@
+
+<section>
+    <div class="container">
+        <div class="card-columns">
+            <?php foreach ($this->post as $item) : ?>
+                <div class="card d-none">
+                    <a href="category/show/<?= $item->id; ?>">
+                        <img class="card-img-top" src="<?= $item->image ?>" alt="image de categorie">
+                    </a>
+                    <div>
+                        <p><small><?= $item->category_name ?></small></p>
+                        <h5><?= $item->header ?></h5>
+                        <p><?= substr($item->content, 0, 100) ?>...<a href="category/show/<?= $item->id; ?>">read more</a></p>
+                            <div>
+                                <p class="card-text"><small class="text-muted"><?= $item->timestamp ?></small></p>
+                            </div>
+                            <div class="col">
+                                <p><small >Posted by: </br><?= $item->firstname . ' ' . $item->lastname ?></small></p>
+                            </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>

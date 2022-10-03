@@ -3,9 +3,20 @@ namespace Src\model;
 
 class CommentModel {
     private $id;
-    private $author;
-    private $comment;
-    private $post_id;
+    private $article_id;
+    private $content;
+    private $created_at;
+    private $account_id; 
+
+
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set the value of id
@@ -20,70 +31,82 @@ class CommentModel {
     }
 
     /**
-     * Set the value of author
+     * Get the value of article_id
+     */ 
+    public function getArticle_id()
+    {
+        return $this->article_id;
+    }
+
+    /**
+     * Set the value of article_id
      *
      * @return  self
      */ 
-    public function setAuthor($author)
+    public function setArticle_id($article_id)
     {
-        $this->author = $author;
+        $this->article_id = $article_id;
 
         return $this;
     }
 
     /**
-     * Set the value of comment
+     * Get the value of content
+     */ 
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set the value of content
      *
      * @return  self
      */ 
-    public function setComment($comment)
+    public function setContent($content)
     {
-        $this->comment = $comment;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Set the value of post_id
+     * Get the value of created_at
+     */ 
+    public function getCreated_at()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
      *
      * @return  self
      */ 
-    public function setPost_id($post_id)
+    public function setCreated_at($created_at)
     {
-        $this->post_id = $post_id;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
     /**
-     * Get the value of id
+     * Get the value of account_id
      */ 
-    public function getId()
+    public function getAccount_id()
     {
-        return $this->id;
+        return $this->account_id;
     }
 
     /**
-     * Get the value of author
+     * Set the value of account_id
+     *
+     * @return  self
      */ 
-    public function getAuthor()
+    public function setAccount_id($account_id)
     {
-        return $this->author;
-    }
+        $this->account_id = $account_id;
 
-    /**
-     * Get the value of comment
-     */ 
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * Get the value of post_id
-     */ 
-    public function getPost_id()
-    {
-        return $this->post_id;
+        return $this;
     }
 }

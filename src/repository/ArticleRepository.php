@@ -2,48 +2,71 @@
 namespace Src\repository;
 
 use PDO;
+use PDOException;
+use Src\core\Debug;
 use Src\model\ArticleModel;
+use Src\controller\frontController\ArticleController;
 
-class ArticleRepository {
+class ArticleRepository extends ManagerRepository {
 
-
-    private PDO $_connexion;
-
-    public function __construct()
+    function insertComment(string $author, string $content, int $article_id)
     {
-        $this->_connexion = DataBase::getConnexion();
+        $stmt = $this->_connexion->prepare('INSERT INTO articles SET author = :author, comment = :comment, post_id = :post_id');
+        $stmt->execute(compact('author', 'content', 'article_id'));
     }
-
     /**
+     * selectAllElements
+     *
+     * @return array
      * ****************************SELECT_ELEMENTS ****************************
-     * ************************************************************************
      */
-    public function selectAllElements(): array
+    public function selectAllArticles(): array
     {
         
-        $sql = "SELECT * FROM articles";
-        $resultats = $this->_connexion->query($sql);
-        $articles = $resultats->fetchAll(PDO::FETCH_CLASS , 'Src\model\ArticleModel');
+        $sql = "SELECT * FROM article";
+        $stmt= $this->_connexion->query($sql);
+        $articles = $stmt->fetchAll(PDO::FETCH_CLASS , 'Src\model\ArticleModel');
         return $articles;
     }
+    
     /**
-     * ****************************SELECT_ELEMENT_ID **************************
-     * ************************************************************************
+     * selectElement
+     *
+     * @param  mixed $id
+     * @return void
+     *  ****************************SELECT_ELEMENT_ID **************************
      */
-
     public function selectElement(int $id)
     {
-        $query = $this->_connexion->prepare("SELECT * FROM articles WHERE id = :id");
-        $query->execute(['id' => $id]);
-        $element = $query->fetch();
+        $stmt = $this->_connexion->prepare("SELECT * FROM article WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        $element = $stmt->fetch();
         return $element;
     }
-
+    
+    /**
+     * deleteElement
+     *
+     * @param  mixed $id
+     * @return void
+     * *****************************DELETE_ARTICLE *******************************
+     */
     public function deleteElement(int $id): void
     {
-        $query = $this->_connexion->prepare("DELETE FROM articles WHERE id = :id ");
-        $query->execute(['id' => $id]);
+        $stmt = $this->_connexion->prepare("DELETE FROM article WHERE id = :id ");
+        $stmt->execute(['id' => $id]);
     }
+
+
+    public function createArticle(string $title,  string $content, $author_id): void
+    {
+        $query = $this->_connexion
+        ->prepare("INSERT INTO article (title, content, account_id, created_date) 
+        VALUES( :title, :content, :author_id, NOW())");
+        $query->execute(compact('title', 'content', 'author_id'));
+    }
+
+
 
 
 }

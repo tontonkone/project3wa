@@ -1,10 +1,15 @@
+<input type="submit" class="btn btn-outline-primary" name="deconnexion" style="float:right;margin: 0px 20px;"></input>
 <div class="admin-container">
   <p>Bienvenue sur votre Admin !</p>
-  <p>Bonjour <?= $_COOKIE['firstName'] ?> <?= $_COOKIE['lastName'] ?></p>
+  <p>Bonjour <?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></p>
   <a href="?page=admin&action=listAccounts">Liste des comptes</a>
   <br />
   <a href="?page=admin&action=createAccount">Créer un compte</a>
   <br>
-  <a href="?page=admin&action=listArticle">voir articles</a>
+  <a href="?page=admin&action=listArticle">articles</a>
+  <br>
+  <a href="?page=admin&action=addArticle">creer articles</a>
+  <br>
+  <a href="?page=admin&action=createCategorie">Créer categorie</a>
 
 </div>

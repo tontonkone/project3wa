@@ -1,18 +1,29 @@
 <?php
-namespace Controller\frontController;
+namespace Src\controller\frontController;
 
-
+use Src\controller\HomeController;
 use Src\core\Url;
+use Src\core\Rendering;
 use Src\repository\ArticleRepository;
 use Src\repository\CommentRepository;
 
-class CommentController {
-    protected $model;
+class CommentController extends HomeController{
+    
+    protected $modelComment;
 
     public function __construct()
     {
-        $this->model = new CommentRepository();
+        $this->modelComment = new CommentRepository();
     }
+
+        
+    /**
+     * insert
+     *
+     * @return void
+     * inserer commentaire ***********************************
+     * 
+     */
 
     public function insert()
     {
@@ -46,12 +57,19 @@ class CommentController {
         }
 
         // 3. Insertion du commentaire
-        $this -> model -> insertComment($author, $content, $article_id);
+        $this -> modelComment -> insertComment($author, $content, $article_id);
 
         // 4. Redirection vers l'article en question :
         Url::location('article.php?id=' . $article_id);
         // inserer des commmentaires 
     }
+    
+    /**
+     * delete
+     *
+     * @return void
+     * effacer commentaire **************************************************
+     */
 
     public function delete(){
         // suprimer des commentaires
@@ -59,18 +77,31 @@ class CommentController {
          * 1. Récupération du paramètre "id" en GET
          */
         if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
-            die("Ho ! Fallait préciser le paramètre id en GET !");
+            Rendering::renderContent('admin/adminPage');
+        }else{
+            $id = $_GET['id'];
+            $commentaire = $this->model->selectElement($id);
+            if (!$commentaire) {
+                die("Aucun commentaire n'a l'identifiant $id !");
+
+                Rendering::renderContent('admin/adminPage');
+            }
+
+            $article_id = $commentaire['article_id'];
+
+            $this->modelComment->deleteElement($id);
+            /**
+             * 5. Redirection vers l'article en question
+             */
+            Url::location('article.php?id=' . $article_id);
         }
 
-        $id = $_GET['id'];
+        
 
         /**
          * 3. Vérification de l'existence du commentaire
          */
-        $commentaire = $this->model->selectElement($id);
-        if (!$commentaire) {
-            die("Aucun commentaire n'a l'identifiant $id !");
-        }
+
 
 
         $article_id = $commentaire['article_id'];

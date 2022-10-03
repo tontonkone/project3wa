@@ -4,59 +4,65 @@ namespace Src\repository;
 use PDO;
 
 
-class CommentRepository {
-
-
-    private PDO $_connexion;
-
-    public function __construct()
-    {
-        $this->_connexion = DataBase::getConnexion();
-    }
+class CommentRepository extends ManagerRepository{ 
+        
     /**
-     * ****************************SELECT_ELEMENT_BY_ID ***********************
-     * ************************************************************************
+     * selectElement
+     *
+     * @param  mixed $id
+     * @return void
+     * recuperer un commentaire *************************************************
      */
-    public function selectElement(int $id)
+    public function selectComment(int $id)
     {
-        $query = $this->_connexion->prepare("SELECT * FROM comments WHERE id = :id");
-        $query->execute(['id' => $id]);
-        $element = $query->fetch();
-        return $element;
+        $stmt = $this->_connexion->prepare("SELECT * FROM comments WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        $comment = $stmt->fetch();
+        return $comment;
     }
 
     /**
-     * ****************************WHERE_ELEMENT *****************************
-     * ************************************************************************
+     * WhereCommentsArticle
+     *
+     * @param  mixed $article_id
+     * @return array
+     * recuperer les commmentaires des articles ************************************
      */
     public function WhereCommentsArticle(int $article_id): array
     {
-        $query = $this->_connexion->prepare("SELECT * FROM comments WHERE article_id = :article_id");
-        $query->execute(['article_id' => $article_id]);
-        $commentaires = $query->fetchAll();
+        $stmt = $this->_connexion->prepare("SELECT * FROM comments WHERE article_id = :article_id");
+        $stmt->execute(['article_id' => $article_id]);
+        $commentaires = $stmt->fetchAll();
 
         return $commentaires;
     }
+    
     /**
-     * ****************************INSERT_ELEMENT *****************************
-     * ************************************************************************
+     * insertComment
+     *
+     * @param  mixed $author
+     * @param  mixed $content
+     * @param  mixed $article_id
+     * @return void
+     * Inserer commentaire ************************************************************
      */
-
     function insertComment(string $author, string $content, int $article_id)
     {
-        $query = $this->_connexion->prepare('INSERT INTO comments SET author = :author, comment = :comment, post_id = :post_id');
-        $query->execute(compact('author', 'content', 'article_id'));
+        $stmt = $this->_connexion->prepare('INSERT INTO comments SET author = :author, comment = :comment, post_id = :post_id');
+        $stmt->execute(compact('author', 'content', 'article_id'));
     }
+    
     /**
-     * ****************************DELETE_ELEMENT *****************************
-     * ************************************************************************
+     * deleteElement
+     *
+     * @param  mixed $id
+     * @return void
+     * Supprimer commentaire **************************************************
      */
-
-
     public function deleteElement(int $id): void
     {
-        $query = $this->_connexion->prepare("DELETE FROM {$this->elTable} WHERE id = :id ");
-        $query->execute(['id' => $id]);
+        $stmt = $this->_connexion->prepare("DELETE FROM comments WHERE id = :id ");
+        $stmt->execute(['id' => $id]);
     }
 
 

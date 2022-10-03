@@ -1,28 +1,12 @@
-<h1><?= $article['title'] ?></h1>
-<small>Ecrit le <?= $article['created_at'] ?></small>
-<p><?= $article['introduction'] ?></p>
-<hr>
-<?= $article['content'] ?>
+<h1>Nos articles</h1>
+<a href="?page=admin&action=addArticle">ajouter ➕</a>
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid unde autem quis doloribus quaerat. Explicabo omnis officia veniam optio in labore animi quos veritatis impedit eius, quis corporis laborum sequi.
+<a class="icon-link" href="?page=admin&action=editAccount&id=<?= $account->getId() ?>">➕</a>
+<?php foreach ($articles as $article) : ?>
+    <h2><?= $article->getTitle() ?></h2>
+    <p><?= $article->getContent() ?></p>
 
-<?php if (count($commentaires) === 0) : ?>
-    <h2>On va s'amuser avec les drapeaux </h2>
-<?php else : ?>
-    <h2>Il y a déjà <?= count($commentaires) ?> réactions : </h2>
-    <?php foreach ($commentaires as $commentaire) : ?>
-        <h3>Commentaire de <?= $commentaire['author'] ?></h3>
-        <small>Le <?= $commentaire['created_at'] ?></small>
-        <blockquote>
-            <em><?= $commentaire['content'] ?></em>
-        </blockquote>
-        <a href="?page=admin&action=editAccount&id=<?= $commentaire['id'] ?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
-    <?php endforeach ?>
-<?php endif ?>
-
-<form action="save-comment.php" method="POST">
-    <h3>Vous voulez réagir ? N'hésitez pas les bros !</h3>
-    <input type="text" name="author" placeholder="Votre pseudo !">
-    <textarea name="content" id="" cols="30" rows="10" placeholder="Votre commentaire ..."></textarea>
-    <input type="hidden" name="article_id" value="<?= $article_id ?>">
-    <button>Commenter !</button>
-</form>
-
+    <a href="?page=admin&action=addComment&id=<?= $comment->getId() ?>" >➕</a>
+    <a href="?page=admin&action=modifyArticle&id=<?= $article->getId() ?>" >Modifier</a>
+    <a class="icon-link" href="?page=admin&action=deleteArticle&id=<?= $article->getId() ?>">🗑️</a>
+<?php endforeach ?>

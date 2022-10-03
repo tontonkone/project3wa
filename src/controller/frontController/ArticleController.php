@@ -1,34 +1,77 @@
 <?php
 namespace Src\controller\frontController;
 
-
-
+use Src\controller\HomeController;
+use Src\core\Debug;
+use Src\core\Url;
 use Src\core\Rendering;
+use Src\model\ArticleModel;
+use Src\model\CommentModel;
 use Src\repository\ArticleRepository;
 use Src\repository\CommentRepository;
 
-class ArticleController{
-    protected $model;
+class ArticleController {
+    
+
     public function __construct()
     {
-        $this->model = new ArticleRepository(); 
+        $this->articleRepository = new ArticleRepository();
+        $this->commentRepository = new CommentRepository();
+        $this->articleModel = new ArticleModel();
+        $this->commentModel = new CommentModel();
     }
+
+    
     /**
-     * *********************** INDEX PAGE *************************
-     **************************************************************
+     * index
+     *
+     * @return void
      */
     public function index()
     {
         //montrer la liste des articles 
-        $articles = $this->model->selectAllElements();
+        $articles = $this->ArticleModel->selectAllElements();
         $pageTitle = "Accueil";
         Rendering::renderContent('listarticle', compact('pageTitle', 'articles'));
     }
+
+    public function addArticle()
+    {
+        if(isset($_POST)){
+            $errors = array();
+            if(!empty($_POST)){
+                
+                if(empty($title = htmlspecialchars($_POST['title']))){
+                    $errors['title'] = 'Vous devez ajouter un titre';
+                }
+
+                if(empty($content = htmlspecialchars($_POST['content']))){
+                    $errors['content'] = 'Vous devez ajouter un contenu';
+                }
+
+                $author_id = htmlspecialchars($_POST['author_id']);
+                
+                if(empty($errors)){
+                    /** Insertion de l'Article*/
+                    $this->articleRepository->createArticle($title, $content, $author_id);
+
+                    Rendering::renderContent('admin/adminPage');
+                    exit;
+                }
+                //\Utils::debug($errors); 
+            }
+        }
+        /** Affichage*/
+        $pageTitle = "Créer un Article";
+        
+    Rendering::renderContent('admin/addArticle', compact('pageTitle', 'errors'));
     
+    
+    }
+
     public function displayArticle()
     {
 
-        $commentModel = new CommentRepository();
         $article_id = null;
         if (!empty($_GET['id']) && ctype_digit($_GET['id'])) 
         {
@@ -37,13 +80,15 @@ class ArticleController{
         // On peut désormais décider : erreur ou pas ?!
         if (!$article_id) 
         {
-            die("Vous devez préciser un paramètre `id` dans l'URL !");
+            die("you are lost lol !");
         }
-        $article = $this->model->selectElement($article_id);
+        // on va chercher l'article 
+        $article = $this->ArticleModel->selectElement($article_id);
 
-        $commentaires = $commentModel->WhereCommentsArticle($article_id);
+        // on va chercher les commentaire
+        $commentaires = $this->commentModel->WhereCommentsArticle($article_id);
         $pageTitle = $article['title'];
-        rendering::renderContent('articles/show', compact('pageTitle','article', 'comments','post_id'));
+        rendering::renderContent('articles/show', compact('pageTitle','article', 'commentaires','post_id'));
 
     }
     /**
@@ -54,15 +99,15 @@ class ArticleController{
     {
         if (empty($_GET['id']) || !ctype_digit($_GET['id'])) 
         {
-            die("Ho ?! Tu n'as pas précisé l'id de l'article !");
+            Rendering::renderContent('admin/adminPage');
         }
         $id = $_GET['id'];
-        $article = $this->model->selectElement($id);
+        $article = $this->articleRepository->selectElement($id);
         if (!$article) 
         {
-            die("L'article $id n'existe pas, vous ne pouvez donc pas le supprimer !");
+            die("L'article $id indefini !");
         }
-        $this->model->deleteElement($id);
+        $this->articleRepository->deleteElement($id);
         
         Rendering::renderContent('admin/adminPage');
     }

@@ -1,49 +1,72 @@
-<?php 
+<?php
+
 namespace Src\controller;
+
+
+use Src\core\Url;
 
 
 use Src\core\Rendering;
 use Src\model\AccountModel;
+use Src\model\ArticleModel;
 use Src\repository\AccountRepository;
 use Src\repository\ArticleRepository;
 
-class HomeController{
+class HomeController
+{
 
     public function __construct()
     {
         $this->articlesRepository = new ArticleRepository();
+        $this->accountRepository = new AccountRepository();
+        $this->articleModel = new ArticleModel();
+        $this->accountModel = new AccountModel();
     }
+    /**Create Article */
 
     /**
-     * *****************DISPLAY_HOME ****************************
-     * **********************************************************
+     * displayHome
+     *
+     * @return void
+     * afficher la home page au visiteur
      */
-    public function displayHome(){
-        $articles = $this->articlesRepository->selectAllElements();
+    public function displayHome()
+    {
+        $articles = $this->articlesRepository->selectAllArticles();
+
         $titleH1 = "nouveaux blog ";
         $title = "Accueil";
-        Rendering::renderContent("homePage", compact("title", 'titleH1','articles'));
+        Rendering::renderContent("homePage", compact("title", 'titleH1', 'articles'));
     }
 
-    /**
-     * *****************LIST_ARTICLES ****************************
-     * ***********************************************************
-     *
-     */
     
+    /**
+     * listArticle
+     *
+     * @return void
+     * afficher la page de la liste des articles au visiteur 
+     */
     public function listArticle()
     {
-        $articles = $this->articlesRepository->selectAllElements();
+        $articles = $this->articlesRepository->selectAllArticles();
         $titleH1 = "nouveaux blog ";
         $title = "Accueil";
-        Rendering::renderContent("articles/listArticle", compact("title", 'titleH1','articles'));
+        Rendering::renderContent("admin/listArticle", compact("title", 'titleH1', 'articles'));
     }
 
-
+    
+    /**
+     * retrieveAccountFromRequest
+     *
+     * @param  mixed $accountRepository
+     * @return AccountModel
+     * 
+     * recuperer l'id  des accounts 
+     */
     static public function retrieveAccountFromRequest(AccountRepository $accountRepository): ?AccountModel
     {
         if (!empty($_GET['id'])) {
-            return $accountRepository->getAccount( htmlentities($_GET['id']));
+            return $accountRepository->getAccount(htmlentities($_GET['id']));
         }
 
         return null;
@@ -61,7 +84,7 @@ class HomeController{
      * ***************** CHECK_ACCOUNT **************************
      * **********************************************************
      */
-    static public function checkAndFillAccount(AccountModel $account): array
+    static public function checkAndFillAccount(AccountModel $accountModel): array
     {
         $errors = [
             'requiredFirstName' => '',
@@ -70,25 +93,25 @@ class HomeController{
             'requiredPassword' => '',
         ];
 
-        $errors['requiredFirstName'] = $account->setFirstName(
+        $errors['requiredFirstName'] = $accountModel->setFirstName(
             htmlentities($_POST['firstName'])
         );
-        $errors['requiredLastName'] = $account->setLastName(
+        $errors['requiredLastName'] = $accountModel->setLastName(
             htmlentities($_POST['lastName'])
         );
-        $errors['requiredLogin'] = $account->setLogin(
+        $errors['requiredLogin'] = $accountModel->setLogin(
             htmlentities($_POST['login'])
         );
-        if (!(empty($_POST['password']) && $account->hasPassword())) {
-            $errors['requiredPassword'] = $account->setPassword(
+        if (!(empty($_POST['password']) && $accountModel->hasPassword())) {
+            $errors['requiredPassword'] = $accountModel->setPassword(
                 $_POST['password']
             );
         }
 
         if (isset($_POST['isAdmin'])) {
-            $account->setIsAdmin(true);
+            $accountModel->setIsAdmin(true);
         } else {
-            $account->setIsAdmin(false);
+            $accountModel->setIsAdmin(false);
         }
 
         // Filter errors array : keep only not empty values
@@ -98,22 +121,22 @@ class HomeController{
 
         return $errors;
     }
-/**
- * ***************** ADMIN EDIT_ACCOUNT *********************
- * **********************************************************
- */
+    
+    /**
+     * editAccount
+     *
+     * @return void
+     */
     public function editAccount()
     {
-        $accountRepository = new AccountRepository(); // account repository
         // Récupère le compte depuis la BDD
-        $account = self::retrieveAccountFromRequest($accountRepository);
+        $account = self::retrieveAccountFromRequest($this->accountRepository);
 
         // S'il ne l'a pas trouvé, redirige l'utilisateur vers la page d'accueil
         if (empty($account)) {
             header('Location:?');
             exit();
         }
-
         // Processus de soumission du formulaire d'édition
         $userMessages = [];
         if (isset($_POST['accountSubmit'])) {
@@ -123,65 +146,65 @@ class HomeController{
             // Si le formulaire est valide, met à jour en BDD
             // et redirige l'utilisateur vers la page d'accueil
             if (empty($userMessages)) {
-                $accountRepository->updateAccount($account);
+                $this->accountRepository->updateAccount($account);
                 header('Location:?');
             }
         }
 
         // Converti l'objet Account en tabeau associatif
         // pour l'affichage des valeurs dans le formulaire
-        $data = $account->toAssociativeArray(); 
-        Rendering::renderContent('admin/accountForm', compact('data'));
+        $data = $account->toAssociativeArray();
+        Rendering::renderContent('admin/accountForm', compact('data', ));
     }
-
+    
     /**
-     * *****************ADMIN CREATE_ACCOUNT ********************
-     * **********************************************************
+     * createAccount
+     *
+     * @return void
      */
-    public function createAccount() 
+    
+    public function createAccount()
     {
-        $accountRepository = new AccountRepository(); //account repository
-        $account = new AccountModel(); // accountmodel 
-        // Créé un nouveau compte
         // Processus de soumission du formulaire de création
         $userMessages = [];
         if (isset($_POST['accountSubmit'])) {
             // Vérifie les champs et met à jour les propriétés du compte
-            $userMessages = self::checkAndFillAccount($account);
+            $userMessages = self::checkAndFillAccount($this->accountModel);
 
             // Si le formulaire est valide, l'enregistre en BDD
             // et redirige l'utilisateur vers la page d'accueil
             if (empty($userMessages)) {
-                $accountRepository->createAccount($account);
+                $this->accountRepository->createAccount($this->accountModel);
                 header('Location:?');
+            }
+            else
+            {
+                Rendering::renderContent('admin/accountForm', compact('userMessages'));
+                exit;
             }
         }
 
-    // Reaffecte les valeurs saisies par l'utilisateur
-    // avant qu'il soumettre le formulaire
+        // Reaffecte les valeurs saisies par l'utilisateur
+        // avant qu'il soumettre le formulaire
         $data = $_POST;
         Rendering::renderContent('admin/accountForm', compact('data'));
     }
 
+    
     /**
-     * ***************** ADMIN_LIST_ACCOUNT *********************
-     * **********************************************************
+     * listAccount
+     *
+     * @return void
      */
     public function listAccount()
     {
-
-        $accountRepo = new AccountRepository(); // accont repository
-        $accounts = $accountRepo->listAccounts();
+        $accounts = $this->accountRepository->listAccounts();
         $titleH1 = "Liste des Utilisateurs";
         $title = "Utilisateur";
-        Rendering::renderContent('admin/listAccounts', compact('title', 'titleH1','accounts')) ;
+        Rendering::renderContent('admin/listAccounts', compact('title', 'titleH1', 'accounts'));
     }
 
-    /**
-     * ***************** ADMIN_DELETE_ACCOUNT*********************
-     * **********************************************************
-     */
-    public static function deleteAccountAction(): void 
+    public static function deleteAccountAction(): void
     {
         $accountRepo = new AccountRepository(); // account repository
 
@@ -190,4 +213,23 @@ class HomeController{
             Rendering::renderContent('admin/adminPage');
         }
     }
+    
+    /**
+     * logOut
+     *
+     * @return void
+     */
+    public function logOut()
+    
+    {
+        unset($_SESSION['id']);
+        // Unset all of the session variables
+        $_SESSION = array();
+        // Destroy the session.
+        session_destroy();
+        // Redirect to the homepage
+        header('Location: ?');
+        exit;
+    }
+    
 }

@@ -33,7 +33,7 @@ class AccountModel {
     }
 
     public function setPassword(string $password): string {
-        if (strlen($password) >= 1 && strlen($password) <= 20) {
+        if (strlen($password) >= 1 && strlen($password) <= 20) { // a changer
             $this->_password = hash('sha256', $password);
             return '';
         }

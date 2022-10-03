@@ -1,6 +1,7 @@
 <?php 
 namespace Src\core;
 
+
 class Rendering {
 
     public static function renderContent(string $path, array $variables = [])

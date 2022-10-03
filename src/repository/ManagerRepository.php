@@ -1,13 +1,14 @@
 <?php
 namespace Src\repository;
 
-use Src\model\ArticleModel;
 use PDO;
+use Src\model\AccountModel;
+use Src\model\ArticleModel;
+use Src\repository\DataBase;
 
 abstract class ManagerRepository{
-    
-    private $table;
-    private PDO $_connexion;
+
+    protected $_connexion;
 
     public function __construct()
     {

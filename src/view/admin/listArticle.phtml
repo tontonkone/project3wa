@@ -1,0 +1,16 @@
+<?php
+
+use Src\utils\Extrait;
+?>
+<h1>Nos articles</h1>
+<a href="?page=admin&action=addArticle">➕ Ajouter Article </a>
+<a href="?page=admin&action=addCategory">➕ Ajouter categorie </a>
+
+<?php foreach ($articles as $article) : ?>
+    <h2><?= nl2br(htmlentities($article->getTitle())) ?></h2>
+    <p><?= nl2br(htmlentities(Extrait::text($article->getContent()))); ?></p>
+    <a href="?page=admin&action=Article&id=<?= $article->getId() ?>"> 🖊️ Modifier</a>
+    <br>
+    <a class="icon-link" href="<?= ADMIN_DEL_ART . $article->getId() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">🗑️ Supprimer</a>
+
+<?php endforeach ?>

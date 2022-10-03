@@ -1,7 +1,7 @@
 <div class='home-container'>
   <h1><?= $titleH1 ?></h1>
   <h2>Home</h2>
-  <p>Bonjour <?= $_COOKIE['firstName'] ?> <?= $_COOKIE['lastName'] ?></p>
+  <p>Bonjour <?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></p>
   <h3>Voir les Article</h3>
   <a href="#">Les articles</a>
   <?php foreach ($articles as $article) : ?>
