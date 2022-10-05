@@ -1,0 +1,25 @@
+
+    <small>Ecrit le <?= $article['created_date']  ?></small>
+    <h1><?= $article['title'] ?></h1>
+    <p><?= $article['content'] ?></p>
+    <hr>
+
+<?php if (count($commentaires) === 0) : ?>
+    <h2> vous pouvez reagissez </h2>
+<?php else : ?>
+    <h2>Il y a <?= count($commentaires) ?> commentaires : </h2>
+    <?php foreach ($commentaires as $commentaire) : ?>
+        <h3>Commentaire de <?= $commentaire['login'] ?></h3>
+        <blockquote>
+            <em><?= $commentaire['content'] ?></em>
+        </blockquote>
+        <a href="delete-comment.php?id=<?= $commentaire['id'] ?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
+    <?php endforeach ?>
+<?php endif ?>
+
+<form method="POST">
+    <h3>votre commentaire !</h3>
+    <input type="text" name="comment" placeholder=" Commenter .... !">
+    <input type="hidden" name>
+    <button>Commenter !</button>
+</form>

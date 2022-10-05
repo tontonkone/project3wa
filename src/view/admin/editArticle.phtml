@@ -1,0 +1,15 @@
+<section class="eddit_article" style="width: 50%; margin-left:20%">
+    <p><strong><?= $pageTitle ?></strong></p>
+    <br />
+    <form method="POST">
+        <div class="form-group">
+            <input name="title" placeholder="Ici le Nouveau Titre" value="<?= $article['title'] ?>"></input>
+        </div>
+        <div class="form-group">
+            <textarea id="tiny" name="content" placeholder="Contenu"><?= $article['content'] ?></textarea>
+        </div>
+        <br />
+        <button class="btn btn-primary" type="submit" id="form-submit">Poster</button>
+    </form>
+    <br />
+</section>

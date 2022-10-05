@@ -54,6 +54,12 @@ class Router{
                         case 'deleteArticle':
                             $controllerArticle->deleteArticle();;
                             break;
+                        case 'modifyArticle':
+                                $controllerArticle->editArticle();;
+                                break;                        
+                        case 'displayArticle':
+                                $controllerArticle->displayArticle();;
+                                break;
                         case 'deconnexion':
                                 $controller->logOut();;
                             break;

@@ -30,9 +30,17 @@ class CommentRepository extends ManagerRepository{
      */
     public function WhereCommentsArticle(int $article_id): array
     {
-        $stmt = $this->_connexion->prepare("SELECT * FROM comments WHERE article_id = :article_id");
+        $query = $this->_connexion->prepare("SELECT account.login, comments.content, comments.id 
+        FROM comments
+        INNER JOIN account
+        ON comments.account_id = account.id 
+        WHERE comments.article_id = :article_id");
+        $query->execute(['article_id' => $article_id]);
+        $commentaires = $query->fetchAll();
+        return $commentaires;
+       /*  $stmt = $this->_connexion->prepare("SELECT * FROM comments WHERE article_id = :article_id");
         $stmt->execute(['article_id' => $article_id]);
-        $commentaires = $stmt->fetchAll();
+        $commentaires = $stmt->fetchAll(); */
 
         return $commentaires;
     }
@@ -48,7 +56,9 @@ class CommentRepository extends ManagerRepository{
      */
     function insertComment(string $author, string $content, int $article_id)
     {
-        $stmt = $this->_connexion->prepare('INSERT INTO comments SET author = :author, comment = :comment, post_id = :post_id');
+        $stmt = $this->_connexion
+        ->prepare('INSERT INTO comments 
+                    SET author = :author, comment = :comment, post_id = :post_id');
         $stmt->execute(compact('author', 'content', 'article_id'));
     }
     
