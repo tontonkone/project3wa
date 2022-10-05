@@ -8,7 +8,6 @@ class AccountModel {
     private string $_firstName;
     private string $_lastName;
     private bool $_isAdmin;
-    private string $_createdDate;
     
     public function __construct() {
         $this->_isAdmin = false;
@@ -72,10 +71,6 @@ class AccountModel {
     public function setIsAdmin(bool $isAdmin): void {
         $this->_isAdmin = $isAdmin;
     }
-    public function setCreteadDate(string $createdDate): void
-    {
-        $this->_createdDate = $createdDate;
-    }
     
     public function getId(): string {
         return $this->_id;
@@ -103,10 +98,5 @@ class AccountModel {
 
     public function isAdmin(): bool {
         return $this->_isAdmin;
-    }
-
-    public function getCreteadDate(): string 
-    {
-        return $this->_createdDate;
     }
 }

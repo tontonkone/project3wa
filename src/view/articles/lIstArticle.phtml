@@ -4,7 +4,6 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid unde autem quis
 <?php foreach ($articles as $article) : ?>
     <h2><?= $article->getTitle() ?></h2>
     <p><?= $article->getContent() ?></p>
-    <p><?= $article->getAuthor_id() ?></p>
 
     <a href="<?= ADMIN_DEL_ART . $article->getId() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">➕</a>
     <a class="icon-link" href="?page=admin&action=deleteAccount&id=<?= $account->getId() ?>">🗑️</a>

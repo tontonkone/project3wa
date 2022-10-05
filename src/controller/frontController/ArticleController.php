@@ -26,7 +26,6 @@ class ArticleController {
      * index
      *
      * @return void
-     * rendre la vue de la page d'acceuil
      */
     public function index()
     {
@@ -35,13 +34,7 @@ class ArticleController {
         $pageTitle = "Accueil";
         Rendering::renderContent('listarticle', compact('pageTitle', 'articles'));
     }
-    
-    /**
-     * addArticle
-     *
-     * @return void
-     * ajouter un articles du coter de l'admin
-     */
+
     public function addArticle()
     {
         if(isset($_POST)){
@@ -75,13 +68,7 @@ class ArticleController {
     
     
     }
-    
-    /**
-     * displayArticle
-     *
-     * @return void
-     * afficher les articles 
-     */
+
     public function displayArticle()
     {
 
@@ -89,26 +76,24 @@ class ArticleController {
         if (!empty($_GET['id']) && ctype_digit($_GET['id'])) 
         {
             $article_id = $_GET['id'];
-            
         }
+        // On peut désormais décider : erreur ou pas ?!
         if (!$article_id) 
         {
             die("you are lost lol !");
         }
-        $article = $this->articleRepository->selectElement($article_id);
-        
-        $commentaires = $this->commentRepository->WhereCommentsArticle($article_id);
+        // on va chercher l'article 
+        $article = $this->ArticleModel->selectElement($article_id);
+
+        // on va chercher les commentaire
+        $commentaires = $this->commentModel->WhereCommentsArticle($article_id);
         $pageTitle = $article['title'];
-        rendering::renderContent('admin/showArticle', compact('pageTitle','article', 'commentaires'));
+        rendering::renderContent('articles/show', compact('pageTitle','article', 'commentaires','post_id'));
 
     }
-    
     /**
-     * deleteArticle
-     *
-     * @return void
-     * 
-     * @method pour effacer les articles appeller par le
+     * *********************DELETE_ARTICLE****************************
+     * ***************************************************************
      */
     public function deleteArticle(): void
     {
@@ -126,44 +111,5 @@ class ArticleController {
         
         Rendering::renderContent('admin/adminPage');
     }
-
-    public function editArticle()
-    {
-        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
-            $article_id = $_GET['id'];
-        }
-        if (!$article_id) 
-        {
-            die("Vous devez préciser un paramètre `id` dans l'URL !");
-        }
-            $article = $this->articleRepository->selectElement($article_id);
-            if (isset($_POST)) 
-            {
-                $errors = array();
-                if (!empty($_POST)) 
-                {
-                    if (empty($title = htmlspecialchars($_POST['title']))) 
-                    {
-                        $errors['title'] = 'Veuillez modifier ou laisser le titre par défaut';
-                    }
-                    if (empty($content = htmlspecialchars($_POST['content']))) 
-                    {
-                        $errors['content'] = 'Veuillez modifier le contenu ou laisser le contenu par defaut';
-                    }
-                    if (empty($errors)) 
-                    {
-                        $article = $this->articleRepository->editArticle($title,$content, $article_id);
-                        Rendering::renderContent('admin/adminPage');
-                        exit;
-                    }
-                }
-            }
-
-        $pageTitle = 'Modifier votre Article';
-
-        Rendering::renderContent('admin/editArticle', compact('pageTitle', 'article', 'article_id', 'errors'));
-    }
-
-
 
 }

@@ -1,7 +1,7 @@
 <h2>Liste des utilisateurs</h2>
 <table>
   <thead>
-    <th>Date de création</th>
+    <th>Identifiant</th>
     <th>Login</th>
     <th>Prénom</th>
     <th>Nom</th>
@@ -9,16 +9,16 @@
     <th><a class="icon-link" href="?page=admin&action=createAccount">➕</a></th>
   </thead>
   <tbody>
-    <?php foreach ($accounts as $account) : ?>
+    <?php foreach($accounts as $account): ?>
       <tr>
-        <td><?= $account->getCreteadDate() ?></td>
-        <td><?= $account->getLogin() ?></td>
-        <td><?= $account->getFirstName() ?></td>
-        <td><?= $account->getLastName() ?></td>
-        <td><?= $account->isAdmin() ? 'Oui' : 'Non' ?></td>
+        <td><?=$account->getId() ?></td>
+        <td><?=$account->getLogin() ?></td>
+        <td><?=$account->getFirstName() ?></td>
+        <td><?=$account->getLastName() ?></td>
+        <td><?=$account->isAdmin() ? 'Oui' : 'Non' ?></td>
         <td>
-          <a class="icon-link" href="?page=admin&action=editAccount&id=<?= $account->getId() ?>">🖊️</a>
-          <a class="icon-link" href="?page=admin&action=deleteAccount&id=<?= $account->getId() ?>">🗑️</a>
+          <a class="icon-link" href="?page=admin&action=editAccount&id=<?=$account->getId() ?>">🖊️</a>
+          <a class="icon-link" href="?page=admin&action=deleteAccount&id=<?=$account->getId() ?>">🗑️</a>
         </td>
       </tr>
     <?php endforeach; ?>

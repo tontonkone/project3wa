@@ -6,7 +6,7 @@ class ArticleModel {
     private $title;
     private $author_id;
     private $content;
-    private $created_date;
+    private $createad_at;
     private $category_id;
 
     
@@ -93,6 +93,26 @@ class ArticleModel {
     }
 
     /**
+     * Get the value of createad_at
+     */ 
+    public function getCreatead_at()
+    {
+        return $this->createad_at;
+    }
+
+    /**
+     * Set the value of createad_at
+     *
+     * @return  self
+     */ 
+    public function setCreatead_at($createad_at)
+    {
+        $this->createad_at = $createad_at;
+
+        return $this;
+    }
+
+    /**
      * Get the value of category_id
      */ 
     public function getCategory_id()
@@ -110,16 +130,5 @@ class ArticleModel {
         $this->category_id = $category_id;
 
         return $this;
-    }
-
-    public function setCreated_date(string $created_date)
-    {
-        $this->created_date = $created_date;
-        return $this;
-    }
-
-    public function getCreated_date()
-    {
-        return $this->created_date;
     }
 }

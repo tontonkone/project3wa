@@ -102,8 +102,7 @@ class HomeController
         $errors['requiredLogin'] = $accountModel->setLogin(
             htmlentities($_POST['login'])
         );
-        if (!(empty($_POST['password']) && $accountModel->hasPassword())) 
-        {
+        if (!(empty($_POST['password']) && $accountModel->hasPassword())) {
             $errors['requiredPassword'] = $accountModel->setPassword(
                 $_POST['password']
             );
@@ -116,7 +115,9 @@ class HomeController
         }
 
         // Filter errors array : keep only not empty values
-        $errors = array_filter($errors, function ($v) { return !empty($v);});
+        $errors = array_filter($errors, function ($v) {
+            return !empty($v);
+        });
 
         return $errors;
     }
@@ -132,22 +133,19 @@ class HomeController
         $account = self::retrieveAccountFromRequest($this->accountRepository);
 
         // S'il ne l'a pas trouvé, redirige l'utilisateur vers la page d'accueil
-        if (empty($account)) 
-        {
+        if (empty($account)) {
             header('Location:?');
             exit();
         }
         // Processus de soumission du formulaire d'édition
         $userMessages = [];
-        if (isset($_POST['accountSubmit'])) 
-        {
+        if (isset($_POST['accountSubmit'])) {
             // Vérifie les champs et met à jour les propriétés du compte
             $userMessages = self::checkAndFillAccount($account);
 
             // Si le formulaire est valide, met à jour en BDD
             // et redirige l'utilisateur vers la page d'accueil
-            if (empty($userMessages)) 
-            {
+            if (empty($userMessages)) {
                 $this->accountRepository->updateAccount($account);
                 header('Location:?');
             }
@@ -169,15 +167,13 @@ class HomeController
     {
         // Processus de soumission du formulaire de création
         $userMessages = [];
-        if (isset($_POST['accountSubmit'])) 
-        {
+        if (isset($_POST['accountSubmit'])) {
             // Vérifie les champs et met à jour les propriétés du compte
             $userMessages = self::checkAndFillAccount($this->accountModel);
 
             // Si le formulaire est valide, l'enregistre en BDD
             // et redirige l'utilisateur vers la page d'accueil
-            if (empty($userMessages)) 
-            {
+            if (empty($userMessages)) {
                 $this->accountRepository->createAccount($this->accountModel);
                 header('Location:?');
             }
@@ -212,8 +208,7 @@ class HomeController
     {
         $accountRepo = new AccountRepository(); // account repository
 
-        if (isset($_GET['id']) && !empty($_GET['id'])) 
-        {
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
             $accountRepo->deleteAccount($_GET['id']);
             Rendering::renderContent('admin/adminPage');
         }

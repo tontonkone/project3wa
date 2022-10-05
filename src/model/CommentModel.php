@@ -5,7 +5,7 @@ class CommentModel {
     private $id;
     private $article_id;
     private $content;
-    private $created_date;
+    private $created_at;
     private $account_id; 
 
 
@@ -73,9 +73,9 @@ class CommentModel {
     /**
      * Get the value of created_at
      */ 
-    public function getCreated_date()
+    public function getCreated_at()
     {
-        return $this->created_date;
+        return $this->created_at;
     }
 
     /**
@@ -83,9 +83,9 @@ class CommentModel {
      *
      * @return  self
      */ 
-    public function setCreated_date($created_date)
+    public function setCreated_at($created_at)
     {
-        $this->created_date = $created_date;
+        $this->created_at = $created_at;
 
         return $this;
     }

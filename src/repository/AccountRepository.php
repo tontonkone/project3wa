@@ -13,7 +13,6 @@ class AccountRepository extends ManagerRepository
    {
       $account = new AccountModel();
       $account->setId($row['id']);
-      $account->setCreteadDate($row['created_date']);
       $account->setLogin($row['login']);
       $account->setEncryptedPassword($row['password']);
       $account->setFirstName($row['firstName']);
@@ -31,8 +30,7 @@ class AccountRepository extends ManagerRepository
 
    public function getAccount(string $id): ?AccountModel
    {
-      $stmt = $this->_connexion
-      ->prepare('SELECT * FROM Account WHERE id = :id;');
+      $stmt = $this->_connexion->prepare('SELECT * FROM Account WHERE id = :id;');
       $stmt->bindValue('id', $id);
       $stmt->execute();
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -53,8 +51,7 @@ class AccountRepository extends ManagerRepository
 
    public function checkLogin($username)
    {
-      $stmt = $this->_connexion
-      ->prepare("SELECT login FROM Account WHERE login = ?");
+      $stmt = $this->_connexion->prepare("SELECT login FROM Account WHERE login = ?");
       $stmt->execute(array($username));
       return $stmt->fetch();
    }
@@ -68,8 +65,7 @@ class AccountRepository extends ManagerRepository
     */
    public function deleteAccount(string $id)
    {
-      $stmt = $this->_connexion
-      ->prepare(' DELETE FROM Account WHERE id = :id;');
+      $stmt = $this->_connexion->prepare(' DELETE FROM Account WHERE id = :id;');
       $stmt->bindValue('id', $id);
       $stmt->execute();
    }
@@ -82,9 +78,8 @@ class AccountRepository extends ManagerRepository
     */
    public function createAccount(AccountModel $account)
    {
-      $stmt = $this->_connexion
-      ->prepare('INSERT INTO Account (id, firstName, lastName, login, password, isAdmin, created_date)
-      VALUES (UUID(), :firstName, :lastName, :login, :password, :isAdmin ,NOW();');
+      $stmt = $this->_connexion->prepare('INSERT INTO Account (id, firstName, lastName, login, password, isAdmin)
+      VALUES (UUID(), :firstName, :lastName, :login, :password, :isAdmin);');
       $stmt->bindValue('firstName', $account->getFirstName());
       $stmt->bindValue('lastName', $account->getLastName());
       $stmt->bindValue('login', $account->getLogin());
@@ -102,15 +97,9 @@ class AccountRepository extends ManagerRepository
     */
    public function updateAccount(AccountModel $account)
    {
-      $stmt = $this->_connexion
-      ->prepare('UPDATE Account 
-               SET firstName = :firstName,
-               lastName  = :lastName,
-               login = :login, 
-               password  = :password,
-               created_date = :created_date,
-               isAdmin   = :isAdmin
-               WHERE id = :id;');
+      $stmt = $this->_connexion->prepare('UPDATE Account 
+      SET firstName = :firstName, lastName  = :lastName,login = :login, password  = :password, isAdmin   = :isAdmin
+      WHERE id = :id;');
 
       $stmt->bindValue('firstName', $account->getFirstName());
       $stmt->bindValue('lastName', $account->getLastName());
