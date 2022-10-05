@@ -1,0 +1,41 @@
+@import 'scss/variables';
+@import 'scss/mixin';
+@import 'scss/nav';
+@import 'scss/form';
+@import 'scss/footer';
+@import 'scss/media';
+@import 'scss/sidebar';
+
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+.container-moove{
+    position: absolute;
+    left: 30%;
+    z-index: -300;
+    width: 100%;
+
+
+}
+html {
+    font-size: 62%;
+}
+.container-moove{
+    position: absolute;
+    z-index: -999;
+    width: 100%;
+
+    
+}
+
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    margin: 0px;
+
+}
+
+

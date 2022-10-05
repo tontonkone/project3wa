@@ -54,12 +54,16 @@ class Router{
                         case 'deleteArticle':
                             $controllerArticle->deleteArticle();;
                             break;
+                        case 'modifyArticle':
+                                $controllerArticle->editArticle();;
+                                break;                        
+                        case 'displayArticle':
+                                $controllerArticle->displayArticle();;
+                                break;
                         case 'deconnexion':
                                 $controller->logOut();;
                             break;
                         case '':
-                                /* $controllerComment->delete();;
-                            break; */
                                 Rendering::renderContent('admin/adminPage');
                         }
                         
@@ -69,6 +73,10 @@ class Router{
                 // Router entre les pages de la partie utilisateur non admin (Frontoffice)
                 switch($page) {
                     case 'home':
+                        break;
+                    case 'deconnexion':
+                        $controller->logOut();;
+                        break;
                     default:
                     //sur page d'acceuil
                         $controller->displayHome();

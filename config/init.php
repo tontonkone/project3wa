@@ -5,10 +5,10 @@ $host = $_SERVER['HTTP_HOST'];
 
 // http://hosts/projet3wa/
 
-define('HOST', 'http://' . $host . '/projet3watest/');
+define('HOST', 'http://' . $host . '/projet3watest1/');
 
 // C:/wamp64/www/site/projet3wa/
-define('ROOT', $root . '/projet3watest/'); 
+define('ROOT', $root . '/projet3watest1/'); 
 
 // C:/wamp64/www/site/projet3wa/src/core/
 define('CORE', ROOT . 'src/core/'); 

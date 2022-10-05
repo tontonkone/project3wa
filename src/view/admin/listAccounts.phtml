@@ -1,7 +1,29 @@
+<header>
+  <div class="menucontainer">
+
+    <nav class="navbar " id="menu">
+      <div class="menucontainer__burger" id="burger">
+        <i class="fas fa-bars open"></i>
+        <i class="fas fa-times close"></i>
+      </div>
+      <a href="#" class="navbar__menu--logo">ENCODEURS </a>
+      <ul class="navbar__menu">
+        <input type="search" name="article" id="">
+        <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
+        <input type="button" class="btn btn-outline-primary" value="back" onclick="history.go(-1)">
+      </ul>
+      <div class="burger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </div>
+</header>
 <h2>Liste des utilisateurs</h2>
 <table>
   <thead>
-    <th>Identifiant</th>
+    <th>Date de création</th>
     <th>Login</th>
     <th>Prénom</th>
     <th>Nom</th>
@@ -9,16 +31,16 @@
     <th><a class="icon-link" href="?page=admin&action=createAccount">➕</a></th>
   </thead>
   <tbody>
-    <?php foreach($accounts as $account): ?>
+    <?php foreach ($accounts as $account) : ?>
       <tr>
-        <td><?=$account->getId() ?></td>
-        <td><?=$account->getLogin() ?></td>
-        <td><?=$account->getFirstName() ?></td>
-        <td><?=$account->getLastName() ?></td>
-        <td><?=$account->isAdmin() ? 'Oui' : 'Non' ?></td>
+        <td><?= $account->getCreatedDate() ?></td>
+        <td><?= $account->getLogin() ?></td>
+        <td><?= $account->getFirstName() ?></td>
+        <td><?= $account->getLastName() ?></td>
+        <td><?= $account->isAdmin() ? 'Oui' : 'Non' ?></td>
         <td>
-          <a class="icon-link" href="?page=admin&action=editAccount&id=<?=$account->getId() ?>">🖊️</a>
-          <a class="icon-link" href="?page=admin&action=deleteAccount&id=<?=$account->getId() ?>">🗑️</a>
+          <a class="icon-link" href="?page=admin&action=editAccount&id=<?= $account->getId() ?>">🖊️</a>
+          <a class="icon-link" href="?page=admin&action=deleteAccount&id=<?= $account->getId() ?>">🗑️</a>
         </td>
       </tr>
     <?php endforeach; ?>

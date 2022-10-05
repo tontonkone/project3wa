@@ -1,13 +1,15 @@
+/*================Root==================*/
+/*===============Dark ================*/
 /* creer les variable sass */
 /* couleur de text */
 .menucontainer {
   position: absolute;
   width: 100%;
-  height: 8vh;
+  height: 5rem;
   top: 0;
   left: 0;
-  background: linear-gradient(#343a3f, #181a1d);
-  color: #fff;
+  background: linear-gradient(#63415e, #851576);
+  color: #00ffff;
   padding: 0 2rem;
 }
 .menucontainer__burger {
@@ -22,8 +24,8 @@
   align-items: center;
 }
 .navbar__menu--logo {
-  font-size: 3rem;
-  color: #fdfdfd;
+  font-size: 2rem;
+  color: #00ffff;
   font-weight: 600;
   text-decoration: none;
 }
@@ -32,35 +34,42 @@
   justify-content: space-between;
   align-items: center;
   list-style: none;
-  width: 550px;
+  width: 50rem;
 }
 .navbar__menu--link {
+  text-align: center;
+  width: 10rem;
   margin: 0rem 0.3rem;
-  padding: 0.2rem 0.5rem;
+  font-size: 2rem;
+  padding: 1rem 2rem;
   display: block;
   transition: 0.3s;
-  border-radius: 0.5rem;
-  color: #fdfdfd;
+  border-radius: 2rem;
+  color: #00ffff;
+  border: 0.01rem solid #00ffff;
+  box-shadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.2), -3px -3px 8px 0 rgba(255, 255, 255, 0.301);
+  color: #00ffff;
   font-weight: 600;
   text-decoration: none;
 }
 .navbar__menu--link:hover {
-  background-color: #00ffff;
-  color: #1c818d;
+  transform: scale(1.1);
+  background-color: #c57ebb;
+  opacity: 0.5;
 }
 
 .active {
-  background-color: linear-gradient(#343a3f, #181a1d);
-  color: #fdfdfd;
+  background-color: linear-gradient(#63415e, #851576);
+  color: #00ffff;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 700px) {
   .navbar__menu--logo {
     z-index: 35;
   }
   .menucontainer__burger {
     display: block;
-    font-size: 2rem;
+    font-size: 3rem;
     cursor: pointer;
     position: relative;
     background: transparent;
@@ -83,11 +92,11 @@
   }
   .navbar__menu {
     position: absolute;
-    top: -20px;
+    top: -3rem;
     left: 0;
     width: 100%;
-    height: 80vh;
-    background: linear-gradient(#343a3f, #181a1d);
+    height: 70vh;
+    background: linear-gradient(#63415e, #851576);
     flex-direction: column;
     padding: 1rem;
     justify-content: space-around;
@@ -104,11 +113,11 @@
   }
 }
 .container-ipt {
-  margin-top: 5rem;
-  width: 350px;
-  height: 500px;
-  background: linear-gradient(#343a3f, #181a1d);
-  border-radius: 25px;
+  margin: 5rem 2rem;
+  width: 35rem;
+  height: 50rem;
+  background: linear-gradient(#63415e, #851576);
+  border-radius: 2rem;
   box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.801);
   display: flex;
   justify-content: center;
@@ -127,7 +136,7 @@
   align-items: center;
   flex-direction: column;
 }
-.container-ipt__register {
+.container-ipt__login {
   visibility: hidden;
 }
 .container-ipt__title {
@@ -136,14 +145,14 @@
   text-transform: uppercase;
 }
 .container-ipt__field {
-  width: 280px;
-  margin: 10px 0;
-  height: 50px;
+  width: 30rem;
+  margin: 0.8rem 0;
+  height: 4rem;
   background: none;
   display: flex;
   align-items: center;
   box-shadow: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.2), inset -6px -6px 10px 0 rgba(160, 156, 156, 0.5);
-  border-radius: 30px;
+  border-radius: 3rem;
 }
 .container-ipt__field i {
   flex: 1;
@@ -154,35 +163,40 @@
 .container-ipt__field input {
   flex: 5;
   width: 100%;
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: 600;
-  border-radius: 30px;
+  border-radius: 3rem;
   border: none;
   outline: none;
   background: none;
-  color: aliceblue;
+  color: #fdfdfd;
 }
 .container-ipt p,
 .container-ipt a {
-  font-size: 14px;
-  color: #999;
+  font-size: 1.3rem;
+  color: #00ffff;
 }
 .container-ipt .account-text {
-  color: #5ab9ea;
+  color: #00ffff;
+}
+.container-ipt__error {
+  font-size: 1.3rem;
+  color: rgb(228, 124, 124);
+  opacity: 0.8;
 }
 
 .btn {
-  width: 130px;
-  height: 45px;
-  background: linear-gradient(#343a3f, #181a1d);
-  font-size: 18px;
+  width: 10rem;
+  height: 4rem;
+  background: linear-gradient(#63415e, #851576);
+  font-size: 1, 5rem;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 20px 0;
-  color: #5ab9ea;
+  margin: 2rem 0;
+  color: #00ffff;
   cursor: pointer;
   border: 1px solid #00ffff;
-  border-radius: 40px;
+  border-radius: 2rem;
   box-shadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.2), -3px -3px 8px 0 rgba(255, 255, 255, 0.301);
 }
 .btn:hover {
@@ -192,10 +206,13 @@
 
 @media (max-width: 750px) {
   .container-ipt {
-    margin: 0;
+    margin: 0px;
     width: 100vw;
     height: 100vh;
     border-radius: 3px;
+  }
+  .container-moove {
+    visibility: hidden;
   }
 }
 @media screen and (min-width: 720px) {
@@ -228,21 +245,92 @@
     color: aqua;
   }
 }
-body {
-  box-sizing: border-box;
-  background-image: url("../img/fond4.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #ecf9ff;
-  overflow-x: hidden;
-  overflow-y: hidden;
+.sidebar__content {
+  position: fixed;
+  background: linear-gradient(#63415e, #851576);
+  transition: all 0.3s ease;
+  width: 30rem;
+  left: 0;
+  height: 100vh;
+  top: 0;
+  padding: 1rem;
+  text-align: center;
+  color: #00ffff;
+  font-size: 1.5rem;
+}
+.sidebar__content img {
+  display: block;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  margin: auto;
+  border: 0.5rem solid black;
+}
+.sidebar__content-hamburger {
+  position: absolute;
+  left: 28rem;
+  color: #fdfdfd;
+  font-size: 3rem;
+  cursor: pointer;
 }
 
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.sidebar-menu .side_open {
+  display: block;
+}
+.sidebar-menu .side_close {
+  display: none;
+}
+.sidebar-menu__item {
+  position: relative;
+  cursor: pointer;
+}
+.sidebar-menu__item a {
+  display: block;
+  text-decoration: none;
+  color: #00ffff;
+  font-size: 1.5rem;
+  line-height: 6rem;
+  padding: 0.5rem 2rem;
+  border-bottom: 0.2rem solid #0c6588;
+}
+.sidebar-menu__item a:hover, .sidebar-menu__item a:active {
+  color: #fdfdfd;
+  background-color: #c57ebb;
+  border-left: 1px solid #fff;
+}
+.sidebar-menu .active .side_open {
+  display: none;
+}
+.sidebar-menu .active .side_close {
+  display: block;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.container-moove {
+  position: absolute;
+  left: 30%;
+  z-index: -300;
+  width: 100%;
+}
+
+html {
+  font-size: 62%;
+}
+
+.container-moove {
+  position: absolute;
+  z-index: -999;
+  width: 100%;
+}
+
+body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  margin: 0px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,3 +1,25 @@
+<header>
+    <div class="menucontainer">
+
+        <nav class="navbar " id="menu">
+            <div class="menucontainer__burger" id="burger">
+                <i class="fas fa-bars open"></i>
+                <i class="fas fa-times close"></i>
+            </div>
+            <a href="#" class="navbar__menu--logo">ENCODEURS </a>
+            <ul class="navbar__menu">
+                <input type="search" name="article" id="">
+                <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
+                <input type="button" class="btn btn-outline-primary" value="back" onclick="history.go(-1)">
+            </ul>
+            <div class="burger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </div>
+</header>
 <?php if (!empty($errors)) : ?>
 
     <div class="arlert alert-danger">

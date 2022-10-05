@@ -1,15 +1,55 @@
-<input type="submit" class="btn btn-outline-primary" name="deconnexion" style="float:right;margin: 0px 20px;"></input>
+<header>
+   <div class="menucontainer">
+
+      <nav class="navbar " id="menu">
+         <div class="menucontainer__burger" id="burger">
+            <i class="fas fa-bars open"></i>
+            <i class="fas fa-times close"></i>
+         </div>
+         <a href="#" class="navbar__menu--logo">LES ENCODEURS </a>
+         <ul class="navbar__menu">
+            <input type="search" name="article" id="" placeholder=""><i class="fa-solid fa-magnifying-glass"></i>
+            <input type="button" class="btn btn-outline-primary" value="back" onclick="history.go(-1)">
+            <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
+         </ul>
+      </nav>
+   </div>
+</header>
+<!-- sidebar -->
+<div class="sidebar">
+   <div class="sidebar__content">
+      <!-- image de profil -->
+      <div class="sidebar__content-img">
+         <img src="<?= PUBLIC_HOME ?>img/pho" alt="photo de profil">
+         <h2><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h2>
+         <p>Role : Admin</p>
+      </div>
+      <div class="sidebar-menu">
+         <div class="sidebar-menu__item"><a href="?page=admin&action=listAccounts"><i class="fas fa-user"></i>Liste des comptes</a></div>
+         <div class="sidebar-menu__item"><a href="?page=admin&action=createAccount"><i class="fas fa-user"></i>Créer un compte</a></div>
+         <div class="sidebar-menu__item"><a href="?page=admin&action=listArticle"><i class="fas fa-newspaper"></i>articles</a></div>
+         <div class="sidebar-menu__item"><a href="?page=admin&action=addArticle"><i class="fas fa-newspaper"></i>creer articles</a> </div>
+         <div class="sidebar-menu__item"><a href="?page=admin&action=createCategorie">Créer categorie</a></div>
+      </div>
+   </div>
+   <!-- burger menu -->
+   <div class="sidebar__content-hamburger">
+      <i class="fas fa-bars side_open"></i>
+      <i class="fas fa-times side_close"></i>
+   </div>
+</div> <!-- fin_div_sidebar -->
+
+
+
 <div class="admin-container">
-  <p>Bienvenue sur votre Admin !</p>
-  <p>Bonjour <?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></p>
-  <a href="?page=admin&action=listAccounts">Liste des comptes</a>
-  <br />
-  <a href="?page=admin&action=createAccount">Créer un compte</a>
-  <br>
-  <a href="?page=admin&action=listArticle">articles</a>
-  <br>
-  <a href="?page=admin&action=addArticle">creer articles</a>
-  <br>
-  <a href="?page=admin&action=createCategorie">Créer categorie</a>
+   <a href="?page=admin&action=listAccounts">Liste des comptes</a>
+   <br />
+   <a href="?page=admin&action=createAccount">Créer un compte</a>
+   <br>
+   <a href="?page=admin&action=listArticle">articles</a>
+   <br>
+   <a href="?page=admin&action=addArticle">creer articles</a>
+   <br>
+   <a href="?page=admin&action=createCategorie">Créer categorie</a>
 
 </div>

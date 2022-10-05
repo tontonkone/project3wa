@@ -1,8 +1,3 @@
-<?php
-
-use Src\utils\Extrait;
-?>
-
 <header>
     <div class="menucontainer">
 
@@ -25,14 +20,19 @@ use Src\utils\Extrait;
         </nav>
     </div>
 </header>
-<h1>Nos articles</h1>
-<a href="?page=admin&action=addArticle">➕ Ajouter Article </a>
-<?php foreach ($articles as $article) : ?>
-    <h2><?= nl2br(htmlentities($article->getTitle())) ?></h2>
-    <p><?= nl2br(htmlentities(Extrait::text($article->getContent()))); ?></p>
-    <a href="?page=admin&action=displayArticle&id=<?= $article->getId() ?>"> Lire l'article </a>
-    <a href="?page=admin&action=modifyArticle&id=<?= $article->getId() ?>"> 🖊️ Modifier</a>
-    <br>
-    <a class="icon-link" href="<?= ADMIN_DEL_ART . $article->getId() ?>" onclick="return window.confirm(`Êtes vous sur de vouloir supprimer cet article ?!`)">🗑️ Supprimer</a>
 
-<?php endforeach ?>
+<section class="eddit_article" style="width: 50%; margin-left:20%">
+    <p><strong><?= $pageTitle ?></strong></p>
+    <br />
+    <form method="POST">
+        <div class="form-group">
+            <input name="title" placeholder="Ici le Nouveau Titre" value="<?= $article['title'] ?>"></input>
+        </div>
+        <div class="form-group">
+            <textarea id="tiny" name="content" placeholder="Contenu"><?= $article['content'] ?></textarea>
+        </div>
+        <br />
+        <button class="btn btn-primary" type="submit" id="form-submit">Poster</button>
+    </form>
+    <br />
+</section>

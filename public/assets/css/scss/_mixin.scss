@@ -1,0 +1,26 @@
+@mixin displayFlex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin typo{
+    color: $colorButtonFond;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+@mixin flexMixins($dir)
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $dir;
+}
+
+@mixin theme($theme: true)
+{
+    @if $theme {
+        background-color: #fff;
+    }
+}

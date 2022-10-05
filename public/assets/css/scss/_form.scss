@@ -1,0 +1,101 @@
+
+.container-ipt{
+
+    margin: 5rem 2rem;
+    width: 35rem;
+    height: 50rem;
+    background: $backgroundGradient;
+    border-radius: 2rem;
+    box-shadow: $boxFormShadow;
+    @include displayFlex;
+    overflow-x: none;
+    .container-ipt__form {
+        display: grid;
+        grid-template-columns: 1fr;
+        form {
+            grid-column: 1 / 2; // start & end 
+            grid-row: 1 / 2; // start & end 
+            @include displayFlex;
+            flex-direction: column;
+        }   
+            }
+            &__login {
+                visibility: hidden;
+            }
+            &__title {
+                color: $colorButtonFond;
+                font-size: 1.5rem;
+                text-transform: uppercase;
+            }
+            &__field {
+                width: 30rem;
+                margin: .8rem 0;
+                height: 4rem;
+                background:none;
+                display: flex;
+                align-items: center;
+                box-shadow: $inputBoxShadow;
+                border-radius: 3rem;
+                
+            }
+            &__field i {
+                flex: 1;
+                text-align: center;
+                font-size:1.3rem ;
+                color: $colorButtonFond;
+            }
+            &__field input{
+                flex: 5;
+                width: 100%;
+                font-size: 1.2rem ;
+                font-weight: 600;
+                border-radius: 3rem;
+                border: none;
+                outline: none;
+                background: none;
+                color: $colorText;
+                }
+                p,
+                a {
+                    font-size: 1.3rem;
+                    color: $colorButtonFond;
+                }
+                .account-text {
+                    color: $colorButtonFond;
+                }
+                &__error {
+                    font-size: 1.3rem;
+                    color:$colorError;
+                    opacity: 0.8;
+                }
+}
+.btn {
+    width: 10rem;
+    height: 4rem;
+    background:$backgroundGradient;
+    font-size: 1,5rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 2rem 0;
+    color: $colorButtonFond;
+    cursor: pointer;
+    border: 1px solid $colorButtonFond;
+    border-radius: 2rem;
+    box-shadow: $btnShadow;
+    &:hover {
+        transform: scale(1.1);
+        background-color: $colorHoverLink;
+    }
+}
+
+@media(max-width: 750px) {
+    .container-ipt {
+        margin: 0px;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 3px;
+    }
+    .container-moove{
+        visibility: hidden;
+    }
+}

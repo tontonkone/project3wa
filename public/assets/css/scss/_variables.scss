@@ -1,3 +1,33 @@
+/*================Root==================*/
+
+    $colorButtonFond: #00ffff;
+    $boxFormShadow: 0 8px 15px 0 rgba(0, 0, 0, 0.801); // box-shadowBox formulaire
+    $backgroundGradient: linear-gradient(#63415e, #851576); // gradient du background
+    $inputBoxShadow: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.2), // input shadow 
+    inset -6px -6px 10px 0 rgba(160, 156, 156, 0.5);
+    $colorText: #fdfdfd;
+    $colorLink: #0c6588;
+    $colorHoverLink: #0c4646;
+    $btnShadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.2),
+                -3px -3px 8px 0 rgba(255, 255, 255, 0.301);
+    $boxFormShadow: 0 8px 15px 0 rgba(0, 0, 0, 0.801);
+
+/*===============Dark ================*/
+
+.theme-dark {
+    $colorBody: #222;
+    $colorMain: #333;
+    $colorTitle: #fff;
+    $colorText: #ddd;
+    $colorLink: #e2f7ff;
+    $colorLinkHover: #fff;
+    $colorMenu: #0c6588;
+    $colorMenuLink: #e2f7ff;
+    $borderSm: 1px solid #666;
+    $borderMd: 1px solid #555;
+    $borderLg: 2px solid #444;
+}
+
 /* creer les variable sass */
     $maxWidth: 1140px;
     $fontFamillyPara: 'Open Sans', sans-serif;
@@ -10,26 +40,26 @@
     $colorBody: #eee;
     $colorMain: #fff;
 
-
     /* couleur de text */
     $colorTitle: #333;
     $colorText:#fdfdfd;
     $colorLink: #0c6588;
     $colorLinkHover: #111;
     $colorMenu: #e2f7ff;
-    $colorMenuLink: #0c6588;
+    $colorLink: #0c6588;
     $colorHeader: #0c6588;
     $colorHeaderTitle: #fff;
     $colorHeaderText: #e2f7ff;
     $colorHeaderLink: #fff;
     $colorHeaderLinkHover: #111;
     $colorFooter: #333;
+    $colorError: rgb(228, 124, 124);
     $colorFooterTitle: #fff;
     $colorFooterText: #ddd;
     $colorFooterLink: #eee;
-    $colorFooterLinkHover: #fff;
-    $colorButtonFond:#29cde0;
-    $colorBtnHover:#1c818d;
+    $colorMenuLinkHover: #c57ebb;
+    $colorButtonFond:#00ffff;
+    $colorBtnHover:#073c42;
     $borderSm: 1px solid #eee;
     $borderMd: 1px solid #ddd;
     $borderLg: 2px solid #ccc;
@@ -39,16 +69,4 @@
     $textShadow: 1px 1px 1px rgba(0, 0, 0, 0.60);
     $boxheader:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     
-    .theme-dark {
-    $colorBody: #222;
-    $colorMain: #333;
-    $colorTitle: #fff;
-    $colorText: #ddd;
-    $colorLink: #e2f7ff;
-    $colorLinkHover: #fff;
-    $colorMenu: #0c6588;
-    $colorMenuLink: #e2f7ff;
-    $borderSm: 1px solid #666;
-    $borderMd: 1px solid #555;
-    $borderLg: 2px solid #444;
-        }
+    

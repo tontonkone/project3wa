@@ -1,20 +1,42 @@
+<header>
+  <div class="menucontainer">
+
+    <nav class="navbar " id="menu">
+      <div class="menucontainer__burger" id="burger">
+        <i class="fas fa-bars open"></i>
+        <i class="fas fa-times close"></i>
+      </div>
+      <a href="#" class="navbar__menu--logo">ENCODEURS </a>
+      <ul class="navbar__menu">
+        <input type="search" name="article" id="">
+        <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
+        <input type="button" class="btn btn-outline-primary" value="back" onclick="history.go(-1)">
+      </ul>
+      <div class="burger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </div>
+</header>
 <div class="form-container">
   <h2>Créer un compte</h2>
   <form method="post">
-    <label for="inputFirstName">Prénom <span class="error"><?=$userMessages['requiredFirstName'] ?? '' ?></span></label>
-    <input name="firstName" id="inputFirstName" type="text" value="<?=$data['firstName'] ?? '' ?>" />
+    <label for="inputFirstName">Prénom <span class="error"><?= $userMessages['requiredFirstName'] ?? '' ?></span></label>
+    <input name="firstName" id="inputFirstName" type="text" value="<?= $data['firstName'] ?? '' ?>" />
 
-    <label for="inputLastName">Nom <span class="error"><?=$userMessages['requiredLastName'] ?? '' ?></span></label>
-    <input name="lastName" id="inputLastName" type="text" value="<?=$data['lastName'] ?? '' ?>" />
+    <label for="inputLastName">Nom <span class="error"><?= $userMessages['requiredLastName'] ?? '' ?></span></label>
+    <input name="lastName" id="inputLastName" type="text" value="<?= $data['lastName'] ?? '' ?>" />
 
-    <label for="inputLogin">Login <span class="error"><?=$userMessages['requiredLogin'] ?? '' ?></span></label>
-    <input name="login" id="inputLogin" type="text" value="<?=$data['login'] ?? '' ?>" />
+    <label for="inputLogin">Login <span class="error"><?= $userMessages['requiredLogin'] ?? '' ?></span></label>
+    <input name="login" id="inputLogin" type="text" value="<?= $data['login'] ?? '' ?>" />
 
-    <label for="inputPassword">Mot de passe <span class="error"><?=$userMessages['requiredPassword'] ?? '' ?></span></label>
+    <label for="inputPassword">Mot de passe <span class="error"><?= $userMessages['requiredPassword'] ?? '' ?></span></label>
     <input name="password" id="inputPassword" type="password" />
 
     <label for="checkboxIsAdmin">Est Admin</label>
-    <input name="isAdmin" id="checkboxIsAdmin" type="checkbox" <?=isset($data['isAdmin']) && $data['isAdmin'] ? 'checked' : '' ?> />
+    <input name="isAdmin" id="checkboxIsAdmin" type="checkbox" <?= isset($data['isAdmin']) && $data['isAdmin'] ? 'checked' : '' ?> />
 
     <input type="submit" name="accountSubmit" value="Enregistrer" />
   </form>
