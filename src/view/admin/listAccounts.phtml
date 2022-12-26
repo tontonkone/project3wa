@@ -1,48 +1,115 @@
-<header>
-  <div class="menucontainer">
+<?php
 
-    <nav class="navbar " id="menu">
-      <div class="menucontainer__burger" id="burger">
-        <i class="fas fa-bars open"></i>
-        <i class="fas fa-times close"></i>
-      </div>
-      <a href="#" class="navbar__menu--logo">ENCODEURS </a>
-      <ul class="navbar__menu">
-        <input type="search" name="article" id="">
-        <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
-        <input type="button" class="btn btn-outline-primary" value="back" onclick="history.go(-1)">
-      </ul>
-      <div class="burger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-    </nav>
+use Src\core\Secu;
+?>
+
+<!-- header starts -->
+<div class="header">
+  <div class="header__left">
+    <a href="#"><img src="../public/assets/img/logo.png" alt="logo"> </a>
   </div>
-</header>
-<h2>Liste des utilisateurs</h2>
-<table>
-  <thead>
-    <th>Date de création</th>
-    <th>Login</th>
-    <th>Prénom</th>
-    <th>Nom</th>
-    <th>Est Admin</th>
-    <th><a class="icon-link" href="?page=admin&action=createAccount">➕</a></th>
-  </thead>
-  <tbody>
-    <?php foreach ($accounts as $account) : ?>
-      <tr>
-        <td><?= $account->getCreatedDate() ?></td>
-        <td><?= $account->getLogin() ?></td>
-        <td><?= $account->getFirstName() ?></td>
-        <td><?= $account->getLastName() ?></td>
-        <td><?= $account->isAdmin() ? 'Oui' : 'Non' ?></td>
-        <td>
-          <a class="icon-link" href="?page=admin&action=editAccount&id=<?= $account->getId() ?>">🖊️</a>
-          <a class="icon-link" href="?page=admin&action=deleteAccount&id=<?= $account->getId() ?>">🗑️</a>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+
+  <div class="header__middle">
+    <div class="header__option active">
+      <a href="?page=admin&action=admin"> <i class="fas fa-home"></i> </a>
+    </div>
+    <div class="header__option">
+      <a href="?page=admin&action=listAccounts"><i class="fas fa-users"></i></a>
+    </div>
+  </div>
+
+  <div class="header__right">
+    <div class="header__info">
+      <?php
+      if ($_SESSION['photo'] === '') {
+        echo '<img class="user__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+      } else {
+        echo '<img class="user__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+      }
+      ?>
+      <h3><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h3>
+
+    </div>
+    <a href="?page=admin&action=deconnexion"><i class="fas fa-times-circle"></i></a>
+  </div>
+</div>
+<div class="cont">
+  <label class="theme-switch" for="checkbox">
+    <input type="checkbox" id="checkbox" />
+  </label>
+</div>
+<!-- header ends -->
+
+<!-- main body starts -->
+<div class="global">
+  <!-- sidebar starts -->
+  <div class="sidebar">
+    <div class="sidebar-side">
+      <?php
+      if ($_SESSION['photo'] === '') {
+        echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+      } else {
+        echo '<img class="user__avatar post__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+      }
+      ?>
+      <h2><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h2>
+    </div>
+    <h3>Mes informations</h3>
+    <p>Role: admin </p>
+    <div class="sidebar-side">
+      <div class="sidebar-side__menu">
+        <a href="?page=admin&action=listAccounts"><i class="fas fa-users"> Users</i></a>
+        <a href="?page=admin&action=createAccount"><i class="fas fa-user-plus"> Ajouter user</i></a>
+        <a href="?page=admin&action=deconnexion"><i class="fas fa-times-circle"> Deconnexion</i></a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="menu-toggle">
+    <div class="opacity"></div>
+    <div class="hamburger">
+      <span></span>
+    </div>
+  </div>
+  <div class="content-articles">
+    <h2>Liste des utilisateurs</h2>
+    <div class="account__separator"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Photo de profils</th>
+          <th>Date de creation</th>
+          <th>login</th>
+          <th>Nom</th>
+          <th>prenom</th>
+          <th>role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+
+        foreach ($accounts as $account) : ?>
+          <tr>
+            <td><?php
+                if ($account->getPhoto() === '') {
+                  echo '<img src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+                } else {
+                  echo '<img src="' . $account->getPhoto() . '">';
+                } ?></td>
+            <td><?= $account->getCreatedDate() ?></td>
+            <td><?= $account->getLogin() ?></td>
+            <td><?= $account->getFirstName() ?></td>
+            <td><?= $account->getLastName() ?></td>
+            <td><?= $account->isAdmin() ? 'Oui' : 'Non' ?></td>
+            <td>
+              <a class="icon--pur" href="?page=admin&action=editAccount&id=<?= $account->getId() ?>"><i class="fas fa-edit"></i></a>
+              <a class="icon--red" href="?page=admin&action=deleteAccount&id=<?= $account->getId() ?>" onclick="return window.confirm(`voulez-vous supprimer ce Compte ?`)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>

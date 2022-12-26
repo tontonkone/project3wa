@@ -10,19 +10,25 @@ class CommentModel {
 
 
 
+    
     /**
-     * Get the value of id
-     */ 
+     * getId
+     *
+     * @return void
+     */
+
     public function getId()
     {
         return $this->id;
     }
 
+    
     /**
-     * Set the value of id
+     * setId
      *
-     * @return  self
-     */ 
+     * @param  mixed $id
+     * @return void
+     */
     public function setId($id)
     {
         $this->id = $id;

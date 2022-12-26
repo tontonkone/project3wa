@@ -1,43 +1,111 @@
-<header>
-  <div class="menucontainer">
+<?php
 
-    <nav class="navbar " id="menu">
-      <div class="menucontainer__burger" id="burger">
-        <i class="fas fa-bars open"></i>
-        <i class="fas fa-times close"></i>
-      </div>
-      <a href="#" class="navbar__menu--logo">ENCODEURS </a>
-      <ul class="navbar__menu">
-        <input type="search" name="article" id="">
-        <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
-        <input type="button" class="btn btn-outline-primary" value="back" onclick="history.go(-1)">
-      </ul>
-      <div class="burger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-    </nav>
+use Src\core\Secu;
+?>
+
+<!-- header starts -->
+<div class="header">
+  <div class="header__left">
+    <a href="#"><img src="../public/assets/img/logo.png" alt="logo"> </a>
   </div>
-</header>
-<div class="form-container">
-  <h2>Créer un compte</h2>
-  <form method="post">
-    <label for="inputFirstName">Prénom <span class="error"><?= $userMessages['requiredFirstName'] ?? '' ?></span></label>
-    <input name="firstName" id="inputFirstName" type="text" value="<?= $data['firstName'] ?? '' ?>" />
 
-    <label for="inputLastName">Nom <span class="error"><?= $userMessages['requiredLastName'] ?? '' ?></span></label>
-    <input name="lastName" id="inputLastName" type="text" value="<?= $data['lastName'] ?? '' ?>" />
+  <div class="header__middle">
+    <div class="header__option active">
+      <a href="?page=admin&action=admin"> <i class="fas fa-home"></i> </a>
+    </div>
+    <div class="header__option">
+      <a href="?page=admin&action=listAccounts"><i class="fas fa-users"></i></a>
+    </div>
+  </div>
 
-    <label for="inputLogin">Login <span class="error"><?= $userMessages['requiredLogin'] ?? '' ?></span></label>
-    <input name="login" id="inputLogin" type="text" value="<?= $data['login'] ?? '' ?>" />
+  <div class="header__right">
+    <div class="header__info">
+      <?php
+      if ($_SESSION['photo'] === '') {
+        echo '<img class="user__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+      } else {
+        echo '<img class="user__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+      }
+      ?>
+      <h3><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h3>
 
-    <label for="inputPassword">Mot de passe <span class="error"><?= $userMessages['requiredPassword'] ?? '' ?></span></label>
-    <input name="password" id="inputPassword" type="password" />
+    </div>
+    <a href="?page=admin&action=deconnexion"><i class="fas fa-times-circle"></i></a>
+  </div>
+</div>
+<div class="cont">
+  <label class="theme-switch" for="checkbox">
+    <input type="checkbox" id="checkbox" />
+  </label>
+</div>
 
-    <label for="checkboxIsAdmin">Est Admin</label>
-    <input name="isAdmin" id="checkboxIsAdmin" type="checkbox" <?= isset($data['isAdmin']) && $data['isAdmin'] ? 'checked' : '' ?> />
+<!-- header ends -->
 
-    <input type="submit" name="accountSubmit" value="Enregistrer" />
-  </form>
+<!-- main body starts -->
+<div class="global">
+  <!-- sidebar starts -->
+  <div class="sidebar">
+    <div class="sidebar-side">
+      <?php
+      if ($_SESSION['photo'] === '') {
+        echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+      } else {
+        echo '<img class="user__avatar post__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+      }
+      ?>
+      <h2><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h2>
+    </div>
+    <h3>Mes informations</h3>
+    <p>Role: admin </p>
+    <div class="sidebar-side">
+      <div class="sidebar-side__menu">
+        <a href="?page=admin&action=listAccounts"><i class="fas fa-users"> Users</i></a>
+        <a href="?page=admin&action=createAccount"><i class="fas fa-user-plus"> Ajouter user</i></a>
+        <a href="?page=admin&action=deconnexion"><i class="fas fa-times-circle"> Deconnexion</i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="menu-toggle">
+    <div class="opacity"></div>
+    <div class="hamburger">
+      <span></span>
+    </div>
+  </div>
+  
+  <div class="content-articles">
+    <div class="account">
+      <div class="element__title">
+        <h2>Créer compte</h2>
+      </div>
+      <div class="account__top">
+        <form method="post" class="articlesend__form">
+          <label for="inputFirstName">Prénom: <span class="alert__error"><?= $userMessages['requiredFirstName'] ?? '' ?></span></label>
+          <input class="account__input" name="firstName" id="inputFirstName" type="text" value="<?= $data['firstName'] ?? '' ?>" >
+
+          <label for="inputLastName">Nom: <span class="alert__error"><?= $userMessages['requiredLastName'] ?? '' ?></span></label>
+          <input class="account__input" name="lastName" id="inputLastName" type="text" value="<?= $data['lastName'] ?? '' ?>" >
+
+          <label for="inputLastEmail">email: <span class="alert__error"><?= $userMessages['requiredEmail'] ?? '' ?></span></label>
+          <input class="account__input" name="email" id="inputLastEmail" type="email" value="<?= $data['email'] ?? '' ?>" >
+
+
+          <label for="inputLogin">Login: <span class="alert__error"><?= $userMessages['requiredLogin'] ?? '' ?></span></label>
+          <input class="account__input" name="login" id="inputLogin" type="text" value="<?= $data['login'] ?? '' ?>" >
+
+          <label for="inputPassword">Mot de passe: <span class="alert__error"><?= $userMessages['requiredPassword'] ?? '' ?></span></label>
+          <input class="account__input" name="password" id="inputPassword" type="password" >
+
+          <label for="checkboxIsAdmin">Est Admin</label>
+          <input class="" name="isAdmin" id="checkboxIsAdmin" type="checkbox" <?= isset($data['isAdmin']) && $data['isAdmin'] ? 'checked' : '' ?> >
+          <div class="account__bottom">
+            <div class="account__option">
+              <button class="icon--pur" type="submit" id="form-submit" name="accountSubmit"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,137 @@
+<?php
+
+use Src\core\Secu;
+?>
+
+<!-- header starts -->
+<div class="header">
+  <div class="header__left">
+    <a href="#"><img src="../public/assets/img/logo.png" alt="logo"> </a>
+  </div>
+
+  <div class="header__middle">
+    <div class="header__option active">
+      <a href="?page=admin&action=user"> <i class="fas fa-home"></i> </a>
+    </div>
+  </div>
+
+  <div class="header__right">
+    <div class="header__info">
+      <?php
+      if ($_SESSION['photo'] === '') {
+        echo '<img class="user__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+      } else {
+        echo '<img class="user__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+      }
+      ?>
+      <h3><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h3>
+
+    </div>
+    <a href="?page=user&action=deconnexion"><i class="fas fa-times-circle"></i></a>
+  </div>
+</div>
+<div class="cont">
+  <label class="theme-switch" for="checkbox">
+    <input type="checkbox" id="checkbox">
+  </label>
+</div>
+<!-- header ends -->
+
+<!-- main body starts -->
+<div class="global">
+  <!-- sidebar starts -->
+  <div class="sidebar">
+    <div class="sidebar-side">
+      <?php
+      if ($_SESSION['photo'] === '') {
+        echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+      } else {
+        echo '<img class="user__avatar post__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+      }
+      ?>
+      <h2><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h2>
+    </div>
+    <h3>Mes informations</h3>
+    <p>Role: User </p>
+    <div class="sidebar-side">
+        <a href="?page=user&action=deconnexion"><i class="fas fa-times-circle"> Deconnexion</i></a>
+    </div>
+
+  </div>
+
+  <div class="menu-toggle">
+    <div class="opacity"></div>
+    <div class="hamburger">
+      <span></span>
+    </div>
+  </div>
+  <!-- sidebar ends -->
+  <div class="content-articles">
+    <!-- message sender starts -->
+    <div class="articlesend">
+
+      <div class="element__title">
+        <h2>Créer article</h2>
+      </div>
+      <div class="articlesend__top">
+        <?php
+        if ($_SESSION['photo'] === '') {
+          echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+        } else {
+          echo '<img class="user__avatar post__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+        }
+        ?>
+        <form action="?page=user&action=ajoutArticle" method="Post" class="articlesend__form" enctype="multipart/form-data">
+          <label for="title">Titre:</label><span class="alert__error"><?= $errors['title'] ?? '' ?></span>
+          <input class="articlesend__input" id="title" type="text" name="title">
+          <label for="content">Contenu:</label><span class="alert__error"><?= $errors['content'] ?? '' ?></span>
+          <textarea rows="5" cols="33" id="content" class="articlesend__input"  name="content"></textarea>
+          <label for="file">fichier:</label><span class="alert__error"><?= $errors['image'] ?? '' ?></span>
+          <input class="articlesend__input" id="file" type="file" name="image" accept="image/jpg, image/jpeg, image/png">
+          <input type="hidden" name="author_id" value="<?= $_SESSION['id'] ?>">
+      </div>
+      <div class="articlesend__bottom">
+        <div class="articlesend__option">
+          <button class="icon--pur" type="submit" id="form-submit" name="ajoutArticle"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      </form>
+    </div>
+    <?php foreach ($articles as $article) : ?>
+      <div class="post">
+        <div class="post__top">
+          <?php
+          if ($article['photo'] === '') {
+            echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+          } else {
+            echo '<img class="user__avatar post__avatar"  src="' . $article['photo'] . ' " alt="photo de profil">';
+          }
+          ?>
+          <div class="post__topInfo">
+            <h1><?= $article['login'] ?></h1>
+            <p><?= $article['created_date'] ?></p>
+          </div>
+        </div>
+        <div class="post__bottom">
+          <h2><?= Secu::inputValid($article['title']); ?></h2>
+          <p><?= Secu::inputValid($article['content']); ?></p>
+          <?php
+          if (isset($article['files'])) {
+            echo '<div class="post__image">
+                              <img src="' . $article['files'] . '" alt="" />
+                           </div>';
+          } else {
+            return;
+          }
+          ?>
+        </div>
+        <div class="post__options">
+          <div class="post__option">
+            <a class="icon--green" href="?page=user&action=showArticle&id=<?= $article['id'] ?>"><i class="fas fa-book-reader"></i> </a>
+          </div>
+        </div>
+      </div>
+    <?php endforeach ?>
+  </div> <!-- feed ends -->
+</div>
+<!-- main body ends -->

@@ -2,31 +2,41 @@
 namespace Src\core;
 
 
+use Exception;
 use Src\core\Rendering;
-use Src\controller\HomeController;
-use Src\controller\frontController\AuthController;
-use Src\controller\frontController\ArticleController;
-use Src\controller\frontController\CommentController;
+use Src\controller\backcontroller\AdminController;
+use Src\controller\frontController\{
+    AuthController,
+    UserController};
+use Src\controller\frontController\{
+    ArticleController,
+    CommentController};
 
 class Router{
+
 
     // Router entre les pages de l'application
     static public function run()
     {
-        $controllerArticle = new ArticleController;
+        $controllerArticle = new ArticleController();
         $controllerAuth = new AuthController();
-        $controller = new HomeController;
         $controllerComment = new CommentController();
+        $controllerAdmin = new AdminController();
+        $controllerUser= new UserController();
+        
+
         // Si l'utilisateur est loggué
         if (isset($_SESSION['isLogged'])) 
         {
 
             $page = isset($_GET['page']) ? $_GET['page'] : '';
             // Si l'utilisateur est un admin
-            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) 
+            {
                 
                 // Router entre les pages de la partie admin (Backoffice)
-                switch($page) {
+                switch($page) 
+                {
                     case 'admin':
                     default:
 
@@ -34,59 +44,102 @@ class Router{
                     switch ($action) 
                     {
                         case 'createAccount':
-                            $controller->createAccount();
+                            $controllerAdmin->createAccount();
                             break;
                         case 'editAccount':
-                            $controller->editAccount();     
+                            $controllerAdmin->editAccount();     
                             break;
                         case 'deleteAccount':
-                            $controller->deleteAccountAction();
+                            $controllerAdmin->deleteAccountAction();
                             break;
                         case 'listAccounts':
-                            $controller->listAccount();
+                            $controllerAdmin->listAccount();
                             break;
                         case 'listArticle':
-                            $controller->listArticle();
+                            $controllerAdmin->listArticle();
                             break;                         
                         case 'addArticle':
                             $controllerArticle->addArticle();
                             break;                  
                         case 'deleteArticle':
-                            $controllerArticle->deleteArticle();;
+                            $controllerArticle->deleteArticle();
                             break;
                         case 'modifyArticle':
-                                $controllerArticle->editArticle();;
-                                break;                        
+                                $controllerArticle->editArticle();
+                            break;                        
                         case 'displayArticle':
-                                $controllerArticle->displayArticle();;
-                                break;
-                        case 'deconnexion':
-                                $controller->logOut();;
+                                $controllerArticle->displayArticle();
                             break;
-                        case '':
-                                Rendering::renderContent('admin/adminPage');
-                        }
+                            break;                        
+                        case 'addComment':
+                                $controllerComment->insertComment();
+                            break;
+                        case 'deleteComment':
+                            $controllerComment->deleteComment();
+                            break; 
+                        case 'deconnexion':
+                                $controllerAuth->logOut();
+                                
+                            break;
+                        default:
+                            
+                                $controllerAdmin->displayAdminHome();
+
+                            break;
+                    }
                         
                 }
             
-            } else {
+            } 
+            else 
+            {
                 // Router entre les pages de la partie utilisateur non admin (Frontoffice)
-                switch($page) {
-                    case 'home':
-                        break;
-                    case 'deconnexion':
-                        $controller->logOut();;
-                        break;
+                switch($page) 
+                {
+
+                    case 'user':
                     default:
-                    //sur page d'acceuil
-                        $controller->displayHome();
-                        break;
+                    try{
+                        $action = isset($_GET['action']) ? $_GET['action'] : '';
+                        switch ($action) 
+                        {
+
+                            case 'ajoutArticle':
+                                $controllerUser->addArticle();
+                                break;
+                            case 'ajoutComment':
+                                $controllerUser->insertComment();
+                                break;
+                            case 'showArticle':
+                                $controllerUser->showArticle();
+                                break;
+                            case 'deconnexion':
+                                $controllerAuth->logOut();
+                                break;
+                            default:
+
+                                $controllerUser->displayHome();
+                                break;
+                        }
+                    }catch(Exception $e)
+                    {
+                        header('location: ../view/404.phtml');
+                    }
+
                 }    
             }
             exit();
         }
-
-    // Formulaires de login et d'inscription
-    $controllerAuth->authVerif();
+        $page = isset($_GET['page']) ? $_GET['page'] : '';
+        switch($page)
+        {
+           case 'connexion':
+            $controllerAuth->connexion();
+                break;
+            default;
+            $controllerAuth->register();
+                break;
+        }
+        
     }
 }

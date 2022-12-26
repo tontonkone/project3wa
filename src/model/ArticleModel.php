@@ -2,12 +2,12 @@
 namespace Src\model;
 
 class ArticleModel {
-    private $id;
-    private $title;
-    private $author_id;
-    private $content;
+    private int  $id;
+    private string $title;
+    private string  $author_id;
+    private string $content;
     private $created_date;
-    private $category_id;
+    private $files;
 
     
 
@@ -92,26 +92,6 @@ class ArticleModel {
         return $this;
     }
 
-    /**
-     * Get the value of category_id
-     */ 
-    public function getCategory_id()
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * Set the value of category_id
-     *
-     * @return  self
-     */ 
-    public function setCategory_id($category_id)
-    {
-        $this->category_id = $category_id;
-
-        return $this;
-    }
-
     public function setCreated_date(string $created_date)
     {
         $this->created_date = $created_date;
@@ -121,5 +101,26 @@ class ArticleModel {
     public function getCreated_date()
     {
         return $this->created_date;
+    }
+
+
+    /**
+     * Get the value of files
+     */ 
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * Set the value of files
+     *
+     * @return  self
+     */ 
+    public function setFiles($files)
+    {
+        $this->files = $files;
+
+        return $this;
     }
 }

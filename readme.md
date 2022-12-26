@@ -4,13 +4,11 @@
 - home page 
 - login 
 - register 
-- categorie 
 - post     
 - comment / update / delete
 ## backend 
 - home page admin
-- login         / create /  update / delete
-- categorie / create /  update / delete
+- login         / create /  update / delete / create /  update / delete
 - post
 - comment  
 - edit 
@@ -25,8 +23,6 @@
 * Composer 
 * * vendor 
 * * autoload 
-* * faker
-* * altorouter 
 * js 
 
 

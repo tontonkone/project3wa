@@ -5,8 +5,9 @@ class Url{
 
     public static function location(string $lien): void
     {
-        header('Location:' . $lien);
+        header('Location:'. $lien);
         exit();
+     
     }
 
 }

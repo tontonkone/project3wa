@@ -1,123 +1,107 @@
-.menucontainer {
-    position: absolute;
-    width: 100%;
-    height: 5rem;
-    top: 0;
-    left: 0;
-    background: $backgroundGradient;
-    color: $colorButtonFond;
-    padding: 0 2rem;
-
-    &__burger {
-        display: none;
-    }
-}
 
 .navbar {
     width: 100%;
-    height: 100%;
+    height: 50px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
+    background-color: var(--color-body);
+    &__menu--logo
+    {
+        img{
+            width: 20rem;
+            position: absolute;
+            z-index: 30;
+            top:-5rem;
+            left: -5rem;
 
-    &__menu--logo {
-        font-size: 2rem;
-        @include typo;
-    }
-
-    &__menu {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        list-style: none;
-        width: 50rem;
-    }
-
-    &__menu--link {
-        text-align: center;
-        width:10rem;
-        margin: 0rem .3rem;
-        font-size: 2rem;
-        padding: 1rem 2rem;
-        display: block;
-        transition: 0.3s;
-        border-radius: 2rem;
-        color: $colorButtonFond;
-        border: .01rem solid $colorButtonFond;
-        box-shadow: $btnShadow;
-        @include typo;
-        &:hover {
-            transform: scale(1.1);
-            background-color: $colorMenuLinkHover;
-            opacity: .5;
-            
         }
     }
-}
 
-.active {
-    background-color: $backgroundGradient;
-    color: $colorButtonFond;
-}
-
-
-@media only screen and (max-width:700px) {
-    .navbar__menu--logo {
-        z-index: 35;
-    }
-
-    .menucontainer__burger {
-        display: block;
-        font-size: 3rem;
-        cursor: pointer;
-        position: relative;
-        background: transparent;
-        z-index: 30;
-
-        .open {
-            display: block;
-        }
-
-        .close {
-            display: none;
-        }
-
-    }
-
-    .active .open {
-        display: none;
-    }
-
-    .active .close {
-        display: block;
-    }
-
-    .navbar__menu--item {
-        display: none;
-    }
-
-    .navbar__menu {
-        position: absolute;
-        top: -3rem;
-        left: 0;
+    &__menu 
+    {
+        @include flexMixins(space-between);
         width: 100%;
-        height: 70vh;
-        background: $backgroundGradient;
-        flex-direction: column;
-        padding: 1rem;
-        justify-content: space-around;
-        transition: transform .2s;
-        visibility: hidden;
-        z-index: 1;
-
 
     }
-
-    .active .navbar__menu {
-        visibility: visible;
-        transition: transform .5s;
-        &--item {
-        display: block;
+    &__items
+    {
+        @include flexMixins(space-evenly);
+        list-style: none;
+        width: 50%;
+        a{
+            display: block;
+            text-decoration: none;
+            margin: 1rem;
+            color: var(--color-ico-sep);
+            font-size: var(--size-title-2);
+            text-transform: uppercase;
+            &:hover{
+                color:var(--color-ico-sep);
+            }
         }
     }
+}
+
+
+.cont {
+    position: fixed;
+    z-index: 999;
+    top: 70px;
+    right: 40px;
+
+    input {
+        width: 90px;
+        height: 40px;
+        background: #111;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    input:checked {
+        background: #fff;
+    }
+
+    input::after {
+        content: "";
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background: #a89422;
+        transform: translate(5px, 5px);
+        transition: 0.3s linear;
+    }
+
+    input:checked::after {
+        inset: unset;
+        background: transparent;
+        box-shadow: 10px 10px 0 #353b48;
+        transform: translate(calc(90px - 45px), -5px);
+    }
+}
+
+/*************************************************/
+/*********************************** Responsive */
+@media (max-width: 780px) {
+
+    .navbar {
+        
+        &__menu
+        {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        &__items
+        {
+            a{
+                font-size: var(--size-text);
+            }
+        }
+    }
+
 }

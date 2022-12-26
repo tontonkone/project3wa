@@ -1,45 +1,138 @@
-<header>
-    <div class="menucontainer">
+<?php
 
-        <nav class="navbar " id="menu">
-            <div class="menucontainer__burger" id="burger">
-                <i class="fas fa-bars open"></i>
-                <i class="fas fa-times close"></i>
-            </div>
-            <a href="#" class="navbar__menu--logo">LeS EnCoDeUrS dE MoUcHe </a>
-            <ul class="navbar__menu">
-                <input type="search" name="article" id="">
-                <li class="navbar__menu--item"><a href="?page=admin&action=deconnexion" class="navbar__menu--link ">Deconnexion</a></li>
-            </ul>
-            <div class="burger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
+use Src\core\Secu;
+?>
+
+<!-- header starts -->
+<div class="header">
+    <div class="header__left">
+        <a href="#"><img src="../public/assets/img/logo.png" alt="logo"> </a>
     </div>
-</header>
-<small>Ecrit le <?= $article['created_date']  ?></small>
-<h1><?= $article['title'] ?></h1>
-<p><?= $article['content'] ?></p>
-<hr>
 
-<?php if (count($commentaires) === 0) : ?>
-    <h2> vous pouvez reagissez </h2>
-<?php else : ?>
-    <h2>Il y a <?= count($commentaires) ?> commentaires : </h2>
-    <?php foreach ($commentaires as $commentaire) : ?>
-        <h3>Commentaire de <?= $commentaire['login'] ?></h3>
-        <blockquote>
-            <em><?= $commentaire['content'] ?></em>
-        </blockquote>
-        <a href="delete-comment.php?id=<?= $commentaire['id'] ?>" onclick="return window.confirm(`Êtes vous sûr de vouloir supprimer ce commentaire ?!`)">Supprimer</a>
-    <?php endforeach ?>
-<?php endif ?>
+    <div class="header__middle">
+        <div class="header__option active">
+            <a href="?page=admin&action=admin"> <i class="fas fa-home"></i> </a>
+        </div>
+        <div class="header__option">
+            <a href="?page=admin&action=listAccounts"><i class="fas fa-users"></i></a>
+        </div>
+    </div>
 
-<form method="POST">
-    <h3>votre commentaire !</h3>
-    <input type="text" name="comment" placeholder=" Commenter .... !">
-    <input type="hidden" name>
-    <button>Commenter !</button>
-</form>
+    <div class="header__right">
+        <div class="header__info">
+            <?php
+            if ($_SESSION['photo'] === '') {
+                echo '<img class="user__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+            } else {
+                echo '<img class="user__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+            }
+            ?>
+            <h3><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h3>
+
+        </div>
+        <a href="?page=admin&action=deconnexion"><i class="fas fa-times-circle"></i></a>
+    </div>
+</div>
+<div class="cont">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+    </label>
+</div>
+<!-- header ends -->
+
+<!-- main body starts -->
+<div class="global">
+    <!-- sidebar starts -->
+    <div class="sidebar">
+        <div class="sidebar-side">
+            <?php
+            if ($_SESSION['photo'] === '') {
+                echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+            } else {
+                echo '<img class="user__avatar post__avatar"  src="' . $_SESSION['photo'] . ' " alt="photo de profil">';
+            }
+            ?>
+            <h2><?= $_SESSION['firstName'] ?> <?= $_SESSION['lastName'] ?></h2>
+        </div>
+        <h3>Mes informations</h3>
+        <p>Role: admin </p>
+        <div class="sidebar-side">
+            <div class="sidebar-side__menu">
+                <a href="?page=admin&action=listAccounts"><i class="fas fa-users"> Users</i></a>
+                <a href="?page=admin&action=createAccount"><i class="fas fa-user-plus"> Ajouter user</i></a>
+                <a href="?page=admin&action=deconnexion"><i class="fas fa-times-circle"> Deconnexion</i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="menu-toggle">
+        <div class="opacity"></div>
+        <div class="hamburger">
+            <span></span>
+        </div>
+    </div>
+    <div class="content-articles">
+        <!-- message sender starts -->
+        <div class="articlesend">
+            <div class="element__title">
+                <h2> Article</h2>
+            </div>
+            <?php foreach ($article as $articl) : ?>
+
+                <div class="post__top">
+                    <?php
+                    if ($articl['photo'] === '') {
+                        echo '<img class="user__avatar post__avatar" src="../public/assets/img/pic_profils/avatar.png" alt="photo de profil">';
+                    } else {
+                        echo '<img class="user__avatar post__avatar"  src="' . $articl['photo'] . ' " alt="photo de profil">';
+                    }
+                    ?>
+                    <div class="post__topInfo">
+                        <h1><?= $articl['login'] ?></h1>
+                        <p><?= $articl['created_date'] ?></p>
+                    </div>
+                </div>
+                <div class="post__bottom">
+                    <h2><?= Secu::inputValid($articl['title']); ?></h2>
+                    <p><?= Secu::inputValid($articl['content']); ?></p>
+                    <?php
+                    if (isset($articl['files'])) {
+                        echo '<div class="post__image">
+                              <img src="' . $articl['files'] . '" alt="" />
+                           </div>';
+                    } else {
+                        return;
+                    }
+                    ?>
+                </div>
+                <div class="post__comments">
+                    <?php if (count($commentaires) === 0) : ?>
+                        <h2>Soyez le premier à commenter </h2>
+                    <?php else : ?>
+                        <h2>Il y a <?= count($commentaires) ?> commentaires : </h2>
+                        <?php foreach ($commentaires as $commentaire) : ?>
+                            <h3>Commentaire de <?= $commentaire['login'] ?></h3>
+                            <blockquote>
+                                <em><?= $commentaire['content'] ?></em>
+                            </blockquote>
+                            <a class="icon--pur" href="?page=admin&action=deleteComment&id=<?= $commentaire['id'] ?>" onclick="return window.confirm(`voulez-vous supprimer ce commentaire ?`)"><i class="fas fa-trash-alt"></i></a>
+                        <?php endforeach ?>
+                    <?php endif ?>
+                    <div class="post__comment--form">
+                        <form action="?page=admin&action=addComment" method="POST">
+                            <label for="content">Commenter:</label><span class="alert__error"><?= $msgErrors['content'] ?? '' ?></span>
+                            <textarea id="content" rows="5" cols="33" class="articlesend__input"  name="content"></textarea>
+
+                            <input type="hidden" name="article_id" value="<?= $articl['id'] ?>">
+
+                            <input type="hidden" name="author" value="<?= $_SESSION['id'] ?>">
+                    </div>
+                    <button class="icon--pur" type="submit" id="form-submit" name="addComment"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+
+            <?php endforeach ?>
+        </div> <!-- feed ends -->
+    </div>
+</div> <!-- fin de sender -->

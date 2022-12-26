@@ -1,39 +1,18 @@
 <?php
 namespace Src\controller\frontController;
 
-use Src\controller\HomeController;
+use Src\controller\backcontroller\AdminController;
+use Src\core\Secu;
 use Src\core\Debug;
-use Src\core\Url;
 use Src\core\Rendering;
-use Src\model\ArticleModel;
-use Src\model\CommentModel;
-use Src\repository\ArticleRepository;
-use Src\repository\CommentRepository;
+use Src\controller\HomeController;
 
-class ArticleController {
+class ArticleController extends HomeController{
     
 
     public function __construct()
     {
-        $this->articleRepository = new ArticleRepository();
-        $this->commentRepository = new CommentRepository();
-        $this->articleModel = new ArticleModel();
-        $this->commentModel = new CommentModel();
-    }
-
-    
-    /**
-     * index
-     *
-     * @return void
-     * rendre la vue de la page d'acceuil
-     */
-    public function index()
-    {
-        //montrer la liste des articles 
-        $articles = $this->ArticleModel->selectAllElements();
-        $pageTitle = "Accueil";
-        Rendering::renderContent('listarticle', compact('pageTitle', 'articles'));
+        parent::__construct();
     }
     
     /**
@@ -44,36 +23,66 @@ class ArticleController {
      */
     public function addArticle()
     {
-        if(isset($_POST)){
+
+       if(isset($_POST['ajoutArticle']))
+        {
             $errors = array();
-            if(!empty($_POST)){
+            if(!empty($_POST))
+            {
+                $title = Secu::inputValid($_POST['title']);
+                $content = Secu::inputValid($_POST['content']);
+                $author_id = Secu::inputValid($_POST['author_id']);
                 
-                if(empty($title = htmlspecialchars($_POST['title']))){
+                if(empty($title))
+                {
                     $errors['title'] = 'Vous devez ajouter un titre';
                 }
 
-                if(empty($content = htmlspecialchars($_POST['content']))){
+                if(empty($content))
+                {
                     $errors['content'] = 'Vous devez ajouter un contenu';
                 }
+            
+                $imageName = $_FILES['image']['name']; // le nom du fichier 
+                $imageTmp = $_FILES['image']['tmp_name']; // le nom temporaire du fichier
+                $imageSize = $_FILES['image']['size']; // la taille de l'image
 
-                $author_id = htmlspecialchars($_POST['author_id']);
-                
-                if(empty($errors)){
-                    /** Insertion de l'Article*/
-                    $this->articleRepository->createArticle($title, $content, $author_id);
+                $imageExplode = explode('.', $imageName);
+                /** on genere un nom unique  */
+                $newNameImage = uniqid('post').'.' . end($imageExplode);
+                $newNameImagePath = '../public/assets/img/img_article/' . $newNameImage;
+                /** DEF: strrchr Trouve la dernière occurrence d'un caractère dans une chaîne */
+                $imageExtension = strrchr($newNameImage, ".");
+                $extensionArray = array('.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG');
+                $sizeMax = 2000000;
 
-                    Rendering::renderContent('admin/adminPage');
-                    exit;
+                if (!empty($_FILES)) 
+                {
+                    if ($imageSize > $sizeMax) 
+                    {
+                        $errors['errorImage'] = "La taille de votre image ne peut pas depasser 2Mo";
+                    }
+
+                    if (!in_array($imageExtension, $extensionArray) && $imageSize !== 0) 
+                    {
+                        $errors['errorImage'] = "Vous ne pouvez télécharger que des fichiers jpg, jpeg ou png ";
+                    }
+                    if ($imageSize === 0) {
+                        $newNameImagePath = "";
+                    }
+
+                    if (empty($errors)) {
+                        /** Insertion de l'Article*/
+                        $this->articleRepository->createArticle($title, $content, $author_id, $newNameImagePath);
+                        move_uploaded_file($imageTmp, $newNameImagePath);
+                        header('location: ?');
+                    }
+
                 }
-                //\Utils::debug($errors); 
             }
         }
-        /** Affichage*/
-        $pageTitle = "Créer un Article";
-        
-    Rendering::renderContent('admin/addArticle', compact('pageTitle', 'errors'));
-    
-    
+        $articles = $this->articlesRepository->whereArticlLog();
+        Rendering::renderContent('admin/adminPage', compact('articles','errors') );
     }
     
     /**
@@ -93,13 +102,12 @@ class ArticleController {
         }
         if (!$article_id) 
         {
-            die("you are lost lol !");
+            header('location: ?');
         }
-        $article = $this->articleRepository->selectElement($article_id);
-        
+        $article = $this->articleRepository->whereArticle($article_id);
         $commentaires = $this->commentRepository->WhereCommentsArticle($article_id);
-        $pageTitle = $article['title'];
-        rendering::renderContent('admin/showArticle', compact('pageTitle','article', 'commentaires'));
+       
+        rendering::renderContent('admin/showArticle', compact('article', 'commentaires'));
 
     }
     
@@ -114,56 +122,58 @@ class ArticleController {
     {
         if (empty($_GET['id']) || !ctype_digit($_GET['id'])) 
         {
-            Rendering::renderContent('admin/adminPage');
+            header('location: ?');
         }
         $id = $_GET['id'];
         $article = $this->articleRepository->selectElement($id);
         if (!$article) 
         {
-            die("L'article $id indefini !");
+            header('location: ?');
         }
         $this->articleRepository->deleteElement($id);
         
-        Rendering::renderContent('admin/adminPage');
+        header('location: ?');
     }
 
     public function editArticle()
     {
-        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
+        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) 
+        {
             $article_id = $_GET['id'];
         }
         if (!$article_id) 
         {
-            die("Vous devez préciser un paramètre `id` dans l'URL !");
+            header('location: ?');
         }
-            $article = $this->articleRepository->selectElement($article_id);
-            if (isset($_POST)) 
+
+        $article = $this->articleRepository->selectElement($article_id);
+        if (isset($_POST)) 
+        {
+            $errors = array();
+            if (!empty($_POST)) 
             {
-                $errors = array();
-                if (!empty($_POST)) 
+                $title = Secu::inputValid($_POST['title']);
+                $content = Secu::inputValid($_POST['content']);
+
+                if (empty($title)) 
                 {
-                    if (empty($title = htmlspecialchars($_POST['title']))) 
-                    {
-                        $errors['title'] = 'Veuillez modifier ou laisser le titre par défaut';
-                    }
-                    if (empty($content = htmlspecialchars($_POST['content']))) 
-                    {
-                        $errors['content'] = 'Veuillez modifier le contenu ou laisser le contenu par defaut';
-                    }
-                    if (empty($errors)) 
-                    {
-                        $article = $this->articleRepository->editArticle($title,$content, $article_id);
-                        Rendering::renderContent('admin/adminPage');
-                        exit;
-                    }
+                    $errors['title'] = 'Veuillez modifier ou laisser le titre par défaut';
+                }
+                if (empty($content)) 
+                {
+                    $errors['content'] = 'Veuillez modifier le contenu ou laisser le contenu par defaut';
+                }
+                if (empty($errors)) 
+                {
+                    $this->articleRepository->editArticle($title,$content, $article_id);
+                    header('location: ?');
                 }
             }
+        }
 
         $pageTitle = 'Modifier votre Article';
 
         Rendering::renderContent('admin/editArticle', compact('pageTitle', 'article', 'article_id', 'errors'));
     }
-
-
-
+    
 }

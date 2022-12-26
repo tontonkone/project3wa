@@ -1,72 +1,101 @@
 /*================Root==================*/
+/* creer les variable sass */
 
-    $colorButtonFond: #00ffff;
-    $boxFormShadow: 0 8px 15px 0 rgba(0, 0, 0, 0.801); // box-shadowBox formulaire
-    $backgroundGradient: linear-gradient(#63415e, #851576); // gradient du background
-    $inputBoxShadow: inset 6px 6px 10px 0 rgba(0, 0, 0, 0.2), // input shadow 
-    inset -6px -6px 10px 0 rgba(160, 156, 156, 0.5);
-    $colorText: #fdfdfd;
-    $colorLink: #0c6588;
-    $colorHoverLink: #0c4646;
-    $btnShadow: 3px 3px 8px 0 rgba(0, 0, 0, 0.2),
-                -3px -3px 8px 0 rgba(255, 255, 255, 0.301);
-    $boxFormShadow: 0 8px 15px 0 rgba(0, 0, 0, 0.801);
+:root {
+    --font-text: 'Open Sans', sans-serif;
+    --font-title: 'Raleway', sans-serif;
+    --size-text: 1.5rem;
+    --size-title-1: 2.5rem;
+    --size-title-2: 2.3rem;
+    --size-title-3: 3rem;
+    --size-title-4: 3.5rem;
+    --line-height-1: 1rem;
+    --line-height: 2rem;
+
+/* les couleur  */
+
+    --color-body: #ffffff;
+    --color-main: #fff;
+    --color-text: #333;
+    --color-title: #0db4ca;
+    --color-input:#5c5c5c;
+    --color-text-white: #333333;
+    --color-text-gray: #555555;
+    --color-side-burger: #898989;
+    --color-text-btn: #ffffff;
+    --color-link: #0c6588;
+    --color-link-hover: #111;
+    --color-header-title: #fff;
+    --color-header-text: #e2f7ff;
+    --color-header-link: #fff;
+    --color-burger: #111;
+    --color-ico-sep: #ce5ebf;
+    --color-hover-ico:#0db4ca;
+    --color-primary:#eff2f5;
+    --color-th-tr:#fafafa;
+     --color-text-gold: rgb(4, 153, 190);
+    --input-form:#fafafa;
+
+/*     les bordure  */
+
+    --border-1px: 1px solid #d3d3d3;
+    --border-2px: 2px solid #ddd;
+
+
+ /*    box shadow */
+    --shadow-article:0px 5px 7px -7px rgba(0, 0, 0, 0.75);
+    --shadow-header:0 5px 8px -9px rgba(0, 0, 0, 0.75);
+    --shadow-form: 0 0 1px rgba(0, 0, 0, 0.2);
+    --shadow-article: 0 0 3px rgba(0, 0, 0, 0.3);
+    --shadow-comment: 0 0 5px rgba(0, 0, 0, 0.4);
+
+/* les gradient */
+    --background-gradient:linear-gradient(to right, #a852e0, #DC31CB);
+}
 
 /*===============Dark ================*/
 
-.theme-dark {
-    $colorBody: #222;
-    $colorMain: #333;
-    $colorTitle: #fff;
-    $colorText: #ddd;
-    $colorLink: #e2f7ff;
-    $colorLinkHover: #fff;
-    $colorMenu: #0c6588;
-    $colorMenuLink: #e2f7ff;
-    $borderSm: 1px solid #666;
-    $borderMd: 1px solid #555;
-    $borderLg: 2px solid #444;
+[data-theme="dark"] {
+
+    --font-text: 'Open Sans', sans-serif;
+    --font-title: 'Raleway', sans-serif;
+
+  /*   taille */
+    --size-text: 1.5rem;
+    --size-title-1: 2.5rem;
+    --size-title-2: 2.3rem;
+    --size-title-3: 3rem;
+    --size-title-4: 3.5rem;
+    --line-height-1: 1rem;
+    --line-height: 2rem;
+
+/*  couleur */
+    --input-form:#fff;
+    --color-text-gold:#a89422;
+    --color-input: #e6e6e6;
+    --color-body:#000000;
+    --color-main: #333;
+    --color-title: #ce5ebf;
+    --color-text: #a89422;
+    --color-text-white: #e2f7ff;
+    --color-input:#e6e6e6;
+    --color-input-black:#333;
+    --color-header-title: #fff;
+    --color-link-hover: #fff;
+    --color-menu: #0c6588;
+    --color-side-burger: #898989;
+    --color-ico-sep:aqua ;
+    --color-hover-ico:#ce5ebf;
+    --background-gradient: linear-gradient(to right, #a89422, #f4d875);
+    --color-text-btn: #ffffff;
+    --color-primary: #000000;
+    --color-th-tr: #fafafa;
+
+/*   box-shadow */
+    --shadow-header: 0 5px 8px -9px rgba(255, 255, 255, 0.75);
+    --shadow-article: 0px 5px 7px -7px rgba(236, 236, 236, 0.75);
+    --shadow-form: 0 0 1px rgba(243, 207, 207, 0.2);
+    --shadow-article: 0 0 3px rgba(187, 187, 187, 0.3);
+    --shadow-comment: 0 0 5px rgba(202, 202, 202, 0.4);
 }
 
-/* creer les variable sass */
-    $maxWidth: 1140px;
-    $fontFamillyPara: 'Open Sans', sans-serif;
-    $fontTitle: 'Raleway', sans-serif;
-    $sizeText: 1.5rem;
-    $sizeTitle1: 3.6rem;
-    $sizeTitle2: 3.6rem;
-    $sizeTitle3: 2.4rem;
-    $lineHeight: 2.0rem;
-    $colorBody: #eee;
-    $colorMain: #fff;
-
-    /* couleur de text */
-    $colorTitle: #333;
-    $colorText:#fdfdfd;
-    $colorLink: #0c6588;
-    $colorLinkHover: #111;
-    $colorMenu: #e2f7ff;
-    $colorLink: #0c6588;
-    $colorHeader: #0c6588;
-    $colorHeaderTitle: #fff;
-    $colorHeaderText: #e2f7ff;
-    $colorHeaderLink: #fff;
-    $colorHeaderLinkHover: #111;
-    $colorFooter: #333;
-    $colorError: rgb(228, 124, 124);
-    $colorFooterTitle: #fff;
-    $colorFooterText: #ddd;
-    $colorFooterLink: #eee;
-    $colorMenuLinkHover: #c57ebb;
-    $colorButtonFond:#00ffff;
-    $colorBtnHover:#073c42;
-    $borderSm: 1px solid #eee;
-    $borderMd: 1px solid #ddd;
-    $borderLg: 2px solid #ccc;
-    $shadowBox:2px 2px 2px rgb(255 255 255 / 26%),-2px -2px 5px rgb(0 0 0 / 87%);
-    $shadowInput: 0 0 3px rgba(0, 0, 0, 0.3);
-    $shadowButton: 2px 2px 2px rgb(255 255 255 / 26%), 2px -2px 5px rgb(0 0 0 / 87%);
-    $textShadow: 1px 1px 1px rgba(0, 0, 0, 0.60);
-    $boxheader:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    
-    

@@ -1,0 +1,23 @@
+
+/********************************
+*           LES FONTS           *
+*********************************
+*/
+
+@font-face {
+    font-family: 'autumn_gardenregular';
+    src: url('../fonts/autumn/utumn_garden-webfont.woff2') format('woff2'),
+        url('../fonts/autumn/autumn_garden-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'poppinsextralight';
+    src: url('../fonts/popins/poppins-extralight-webfont.woff2') format('woff2'),
+        url('../fonts/poppins/poppins-extralight-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+

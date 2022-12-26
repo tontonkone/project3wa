@@ -1,0 +1,50 @@
+<header>
+    <div class="navbar">
+        <nav class="navbar__menu" id="menu">
+            <a href="#" class="navbar__menu--logo"><img src="../public/assets/img/logo.png" alt="logo"> </a>
+            <ul class="navbar__items">
+                <li class="navbar__menu--item"><a href="?page=connexion" class="navbar__menu--link ">Connexion</a></li>
+                <li class="navbar__menu--item"><a href="?page=register" class="navbar__menu--link ">Inscription</a></li>
+            </ul>
+            <div class="cont">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox">
+                </label>
+            </div>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <div class="section">
+        <div class="container__left">
+            <div id="remov">
+                <?php require 'include/fond.svg' ?>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container__right">
+            <div class="container__log">
+                <h2 class="container__title">Connexion</h2>
+                <div class="container__separator"></div>
+                <p class="container__para">Vous n'avez pas de compte ? <a href="?page=register" id="sign-up-link">Inscription</a></p>
+                <span class="alert__error"><?= $userMessages['loginFail'] ?></span>
+                <form method="post" class="container__form">
+                    <span class="alert__error"><?= $userMessages['requiredLogin'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="container__form--input" placeholder=" Username" name="formLogin">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredPassword'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="container__form--input" placeholder=" Password" name="formPassword">
+                    </label>
+
+                    <input type="submit" value="Login" class="container__form--btnsub" name="loginSubmit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

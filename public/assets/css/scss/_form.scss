@@ -1,101 +1,136 @@
+.container {
 
-.container-ipt{
+    min-height: 100vh;
+    width: 100%;
+    background-color:var(--color-body);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: none;
 
-    margin: 5rem 2rem;
-    width: 35rem;
-    height: 50rem;
-    background: $backgroundGradient;
-    border-radius: 2rem;
-    box-shadow: $boxFormShadow;
+    &__left 
+    {
+        svg 
+        {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    &__log 
+    {
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__title 
+    {
+        text-transform: uppercase;
+        font-size:var(--size-title-3);
+        color:var(--color-title) ;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 8rem;
+    }
+
+    &__separator
+    {
+        width: 20rem;
+        height: .3rem;
+        background-color: var(--color-ico-sep);
+        margin: .3rem 0;
+    }
+
+    &__para
+    {
+        text-align: center;
+        font-size: var(--size-text-2);
+        line-height: var(--line-height-1);
+        margin: 3rem 0;
+        color: var(--color-text);
+    }
+    a {
+        text-decoration: none;
+    }
+    a:visited{
+        color: aqua;
+    }
+
+}
+
+
+.container__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin:2rem 0;
+
+    &--field
+    {
+        width: 100%;
+        position:relative;
+        margin-bottom: 2rem;
+    }
+    &--btnsub
+    {
+        color: var(--color-text-btn);
+        padding: 14px 64px;
+        margin: 1rem auto;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+        background-image:var(--background-gradient);
+        cursor: pointer;
+        transition: opacity 0.4s;
+        &:hover 
+        {
+            opacity: 0.9;
+        }
+    }
+   &--btnsub,
+    &--input {
+        border: none;
+        outline: none;
+        border-radius: 30px;
+        font-size: var(--color-text-2);
+    }
+    i {
+        position: absolute;
+        left: 32px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgb(59, 59, 59);
+        transition: color 0.4s;
+    }
+}
+input[type="file"]{
+    text-decoration: none;
+    font-size: 1.02rem;
+    visibility: none;    
+}
+input {
+    background: var(--input-form);
+    color: var(--color-text-gray);
+    letter-spacing: 0.5px;
+    padding: 14px 64px;
+}
+.section {
     @include displayFlex;
-    overflow-x: none;
-    .container-ipt__form {
-        display: grid;
-        grid-template-columns: 1fr;
-        form {
-            grid-column: 1 / 2; // start & end 
-            grid-row: 1 / 2; // start & end 
-            @include displayFlex;
-            flex-direction: column;
-        }   
-            }
-            &__login {
-                visibility: hidden;
-            }
-            &__title {
-                color: $colorButtonFond;
-                font-size: 1.5rem;
-                text-transform: uppercase;
-            }
-            &__field {
-                width: 30rem;
-                margin: .8rem 0;
-                height: 4rem;
-                background:none;
-                display: flex;
-                align-items: center;
-                box-shadow: $inputBoxShadow;
-                border-radius: 3rem;
-                
-            }
-            &__field i {
-                flex: 1;
-                text-align: center;
-                font-size:1.3rem ;
-                color: $colorButtonFond;
-            }
-            &__field input{
-                flex: 5;
-                width: 100%;
-                font-size: 1.2rem ;
-                font-weight: 600;
-                border-radius: 3rem;
-                border: none;
-                outline: none;
-                background: none;
-                color: $colorText;
-                }
-                p,
-                a {
-                    font-size: 1.3rem;
-                    color: $colorButtonFond;
-                }
-                .account-text {
-                    color: $colorButtonFond;
-                }
-                &__error {
-                    font-size: 1.3rem;
-                    color:$colorError;
-                    opacity: 0.8;
-                }
-}
-.btn {
-    width: 10rem;
-    height: 4rem;
-    background:$backgroundGradient;
-    font-size: 1,5rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin: 2rem 0;
-    color: $colorButtonFond;
-    cursor: pointer;
-    border: 1px solid $colorButtonFond;
-    border-radius: 2rem;
-    box-shadow: $btnShadow;
-    &:hover {
-        transform: scale(1.1);
-        background-color: $colorHoverLink;
-    }
 }
 
-@media(max-width: 750px) {
-    .container-ipt {
-        margin: 0px;
-        width: 100vw;
-        height: 100vh;
-        border-radius: 3px;
+
+/* Responsive mobile */
+
+@media (max-width: 780px) {
+
+    .container {
+    @include displayFlex;
+        
+        &__left
+        {
+            display: none;
+        }
     }
-    .container-moove{
-        visibility: hidden;
-    }
+
 }

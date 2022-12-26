@@ -1,0 +1,80 @@
+<header>
+    <div class="navbar">
+        <nav class="navbar__menu" id="menu">
+            <a href="#" class="navbar__menu--logo"><img src="../public/assets/img/logo.png" alt="logo"> </a>
+            <ul class="navbar__items">
+                <li class="navbar__menu--item"><a href="?page=connexion" class="navbar__menu--link ">Connexion</a></li>
+                <li class="navbar__menu--item"><a href="?page=register" class="navbar__menu--link ">Inscription</a></li>
+            </ul>
+            <div class="cont">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" >
+                </label>
+            </div>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <div class="section">
+        <div class="container__left">
+            <div id="remov">
+                <?php require 'include/fond.svg' ?>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container__right">
+            <div class="container__log">
+                <h2 class="container__title">Inscription</h2>
+                <div class="container__separator"></div>
+                <p class="container__para">Avez vous un compte ? <a href="?page=connexion" id="sign-up-link">Connexion</a></p>
+                <form method="post" class="container__form" enctype="multipart/form-data">
+                    <span class="alert__success"><?= $userMessages['sendSuccess'] ?></span>
+                    <span class="alert__error"><?= $userMessages['requiredFirstName'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="container__form--input" placeholder="first name" name="formFirstName" value="<?= $data['formFirstName'] ?? '' ?>">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredLastName'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="container__form--input" placeholder="last name" name="formLastName" value="<?= $data['formLastName'] ?? '' ?>">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredLogin'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="container__form--input" placeholder="Login" name="formLogin" value="<?= $data['formLogin'] ?? '' ?>">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredEmail'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-at"></i>
+                        <input type="email" class="container__form--input" placeholder="Email" name="formEmail" value="<?= $data['formEmail'] ?? '' ?>">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredPassword'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="container__form--input" placeholder="Mot de passe " name="formPassword">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredPassword2'] ?></span>
+                    <label class="container__form--field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="container__form--input" placeholder="Confirmer votre mot de passe " name="formPassword2">
+                    </label>
+
+                    <span class="alert__error"><?= $userMessages['requiredImage'] ?></span>
+                    <label for="file" class="container__form--field">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" id="file" class="container__form--input" name="image" accept="image/jpg, image/jpeg, image/png">
+                    </label>
+
+                    <input type="submit" value="Sign up" class="container__form--btnsub" name="createAccountSubmit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,59 +1,84 @@
-/* **********************variable*************** 
-*/
+/**********************************************************************/
+                    /* variable*/
+/**********************************************************************/
 
-const burger = document.getElementById("burger");
-const menu = document.querySelector("#menu");
+const svgEl = document.querySelectorAll("#imgVect,#imgVect_2, #imgVect_3, #imgVect_4,#imgVect_5, #imgVect_6,#imgVect_7, #imgVect_8, #imgVect_9,#imgVect_10, #imgVect_11, #imgVect_12")
+const menu_toggle = document.querySelector('.menu-toggle');
+const sidebar = document.querySelector('.sidebar');
+const btnDarkMode = document.querySelector("#cont__toggle");
+const body = document.querySelector("html");
+const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
 
-const sign_up_link = document.querySelector("#sign-up-link");
-const sign_in_link = document.querySelector("#sign-in-link");
-const container = document.querySelector(".container-ipt");
-const login = document.querySelector(".container-ipt__login");
-const register = document.querySelector(".container-ipt__register");
-const elements = document.querySelectorAll(".container__img");
+/**********************************************************************/
+                    /* function*/
+/**********************************************************************/
 
 
-/***************************************************
- *                      Function
- * **************************************************
-*/
-burger.addEventListener("click", () => 
-{ 
-    menu.classList.toggle('active')
-});
+document.addEventListener("DOMContentLoaded", function () {
+    
+    /**
+     * parallax 
+    */
+    //ecouter le deplacement de la souris 
+
+    document.addEventListener("mousemove", mouveIco);
+
+    function mouveIco(el) {
+    // selection de chaque elements
+        svgEl.forEach(function (element) {
+            const moove = element.getAttribute("data-speed"); 
+            const y = (el.pageY * moove) / 200;
+            const x = (el.pageX * moove) / 200;
+            element.style.transform = "translateX(" + x + "px) translateY(" + y + "px)";
+        });
+    }
 
 /**
- * form 
- */
-
-    sign_in_link.addEventListener("click", () => {
-        login.style.visibility = "hidden";
-        register.style.visibility = "visible";
-        });
-    sign_up_link.addEventListener("click", () => {
-        register.style.visibility = "hidden";
-        login.style.visibility = "visible";
-    });
-/****************************************
- *             parallax
- * *************************************
- */
-
-document.addEventListener('mousemove', mouveIco);
+ * Dark mode 
+*/
+// fucntion de de verifaction de button check
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            // definir la valeur de l'attribut data theme
+        }
+        else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            
+        }
+    }
     
-function mouveIco(el) {
-    document.querySelectorAll(
-    "#imgVect,#imgVect_2, #imgVect_3, #imgVect_4,#imgVect_5, #imgVect_6,#imgVect_7, #imgVect_8, #imgVect_9,#imgVect_10, #imgVect_11, #imgVect_12"
-    ).forEach(function (element) {
-        const moove = element.getAttribute("data-speed");
-        const y = (el.pageY * moove) / 200;
-        const x = (el.pageX * moove) / 200;
-        element.style.transform =
-        "translateX(" + x + "px) translateY(" + y + "px)";
-    });
-}
+    //  ecouter l'evenement change pour verifier la function checkbox 
 
-/*     sign_in_link.addEventListener("click", () => {
-    console.log("va");
-    container.classList.remove("container-ipt__login");
-    container.classList.remove("sign-up-mode");
-    }); */
+    toggleSwitch.addEventListener('change', switchTheme, false);
+    
+    //Utiliser localStorage pour stocker si le mode sombre est actuellement activé ou désactivé.
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark'); 
+        }
+        else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light'); 
+        }
+    }
+    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+    
+    // menu burger 
+    
+        menu_toggle.addEventListener('click', () => {
+        menu_toggle.classList.toggle('is-active');
+        sidebar.classList.toggle('is-active');
+    });
+
+
+});

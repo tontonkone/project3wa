@@ -11,7 +11,7 @@ class CommentRepository extends ManagerRepository{
      *
      * @param  mixed $id
      * @return void
-     * recuperer un commentaire *************************************************
+     * recuperer un commentaire 
      */
     public function selectComment(int $id)
     {
@@ -26,7 +26,7 @@ class CommentRepository extends ManagerRepository{
      *
      * @param  mixed $article_id
      * @return array
-     * recuperer les commmentaires des articles ************************************
+     * recuperer les commmentaires des articles 
      */
     public function WhereCommentsArticle(int $article_id): array
     {
@@ -36,14 +36,11 @@ class CommentRepository extends ManagerRepository{
         ON comments.account_id = account.id 
         WHERE comments.article_id = :article_id");
         $query->execute(['article_id' => $article_id]);
-        $commentaires = $query->fetchAll();
-        return $commentaires;
-       /*  $stmt = $this->_connexion->prepare("SELECT * FROM comments WHERE article_id = :article_id");
-        $stmt->execute(['article_id' => $article_id]);
-        $commentaires = $stmt->fetchAll(); */
-
-        return $commentaires;
+        $comments = $query->fetchAll();
+        return $comments;
     }
+
+    
     
     /**
      * insertComment
@@ -52,14 +49,14 @@ class CommentRepository extends ManagerRepository{
      * @param  mixed $content
      * @param  mixed $article_id
      * @return void
-     * Inserer commentaire ************************************************************
+     * Inserer commentaire 
      */
-    function insertComment(string $author, string $content, int $article_id)
+    function insertComment(string $account_id, string $content, int $article_id)
     {
-        $stmt = $this->_connexion
-        ->prepare('INSERT INTO comments 
-                    SET author = :author, comment = :comment, post_id = :post_id');
-        $stmt->execute(compact('author', 'content', 'article_id'));
+        $stmt = $this->_connexion->
+        prepare("INSERT INTO comments (account_id, content, article_id, created_date) 
+                VALUES( :account_id, :content, :article_id, NOW())");;
+        $stmt->execute(compact('account_id', 'content', 'article_id'));
     }
     
     /**
@@ -67,9 +64,9 @@ class CommentRepository extends ManagerRepository{
      *
      * @param  mixed $id
      * @return void
-     * Supprimer commentaire **************************************************
+     * Supprimer commentaire 
      */
-    public function deleteElement(int $id): void
+    public function deleteComment(int $id): void
     {
         $stmt = $this->_connexion->prepare("DELETE FROM comments WHERE id = :id ");
         $stmt->execute(['id' => $id]);
